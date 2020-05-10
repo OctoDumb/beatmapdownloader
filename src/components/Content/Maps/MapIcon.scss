@@ -1,0 +1,45 @@
+.icons {
+    margin-top: 4px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    *{
+        margin-right: 4px;
+    }
+}
+
+.diff-easy {
+    path {
+        fill: #88B300 
+    }
+}
+
+.diff-normal {
+    path {
+        fill: #66CCFF 
+    }
+}
+
+.diff-hard {
+    path {
+        fill: #FFCC22
+    }
+}
+
+.diff-insane {
+    path {
+        fill: #FF66AA
+    }
+}
+
+.diff-expert {
+    path {
+        fill: #8866EE
+    }
+}
+
+.diff-expertplus {
+    path {
+        fill: #000000
+    }
+} 

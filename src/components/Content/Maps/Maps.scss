@@ -43,13 +43,12 @@
         border-radius: 25px;
         z-index: 3;
         font-family: 'torus-semibold';
-        font-size: 14px;
+        font-size: 12px;
         text-transform: uppercase;
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        
     }
     &::after {
         content: '';

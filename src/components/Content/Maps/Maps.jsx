@@ -13,7 +13,33 @@ export default class Search extends Component {
                     title: "Galaxy Collapse",
                     artist: "Kurokotei",
                     mapper: "Doomsday is Bad",
-                    source: "東方Project"
+                    source: "東方Project",
+                    maps: [
+                        {
+                            "version": "Easy",
+                            "stars": 1.5
+                        },
+                        {
+                            "version": "Normal",
+                            "stars": 2.4
+                        },
+                        {
+                            "version": "Hard",
+                            "stars": 3.6
+                        },
+                        {
+                            "version": "Insane",
+                            "stars": 5
+                        },
+                        {
+                            "version": "Expert",
+                            "stars": 6
+                        },
+                        {
+                            "version": "Expert+",
+                            "stars": 7
+                        }
+                    ]
                 },
                 {
                     background: "https://assets.ppy.sh/beatmaps/400078/covers/cover.jpg?1521104370",

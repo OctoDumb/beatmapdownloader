@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MapIcon from './MapIcon';
 
 export default class Map extends Component {
     render() {
@@ -21,6 +22,7 @@ export default class Map extends Component {
                     <div className="map-content-information">
                         <span className="map-content-information__text">mapped by <span className="map-content-information__mapper">{this.props.mapper}</span></span>
                         <span className="map-content-information__text">{this.props.source}</span>
+                        <MapIcon maps={this.props.maps || []}/>
                     </div>
                 </div>
             </div>
