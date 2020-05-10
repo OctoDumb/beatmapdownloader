@@ -1,0 +1,92 @@
+@import '../../../Vars.scss';
+@import '../../../Fonts.scss';
+
+.content-maps {
+    padding-top: 30px;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.map {
+    width: 44%;
+    height: 160px;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.map-header {
+    width: 100%;
+    height: 110px;
+    padding: 10px 0;
+    padding-left: 10px;
+    position: relative;
+    background-color: $color4;
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &__status {
+        width: 80px;
+        height: 30px;
+        background: $color5;
+        border-radius: 25px;
+        z-index: 3;
+        font-family: 'torus-bold';
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        background-color: rgba(#000, .8 );
+    }
+}
+
+.map-header-information {
+    z-index: 3;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    &__title {
+        font-family: 'torus-bold';
+        font-size: 22px;
+    }
+    &__artist {
+        font-family: 'torus-semibold';
+        font-size: 14px;
+    }
+}
+
+.map-content {
+    height: 50px;
+    background: $color5;
+}
+
+.map-content-information {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    &__text {
+        font-family: 'torus-regular';
+        font-size: 14px;
+        color: white;
+    }
+    &__mapper {
+        color: $fontColor3;
+    }
+}

@@ -1,0 +1,55 @@
+@import '../../../Vars.scss';
+@import '../../../Fonts.scss';
+
+.content-sort {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    &-row {
+        box-sizing: border-box;
+        width: 100%;
+        padding-left: 5%;
+        height: 40px;
+        display: flex;
+        &__title {
+            width: 15%;
+            font-family: 'torus-bold';
+            font-size: 18px;
+            color: white;
+        }
+        &__options  {
+            width: 85%;
+            display: flex;
+            align-content: space-between;
+            flex-wrap: wrap;
+        }
+        &__option {
+            font-family: 'torus-light';
+            font-size: 18px;
+            margin-right: 25px;
+            cursor: pointer;
+            input {
+                display: none;
+            }
+            &>input:checked+span {
+                color: white;
+                cursor: pointer;
+            }
+            &>input:not(:checked)+span {
+                color: $fontColor2;
+                cursor: pointer;
+            }
+            &:last-child {
+                margin-right: 0px;
+            }
+            &--active {
+                font-family: 'torus-light';
+                font-size: 18px;
+                color: white;
+                margin-right: 25px;
+                cursor: pointer;
+            }
+        }
+    }
+}

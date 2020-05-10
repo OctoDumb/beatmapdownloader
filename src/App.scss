@@ -1,0 +1,17 @@
+@import './Vars.scss';
+@import './Fonts.scss';
+
+.App {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'torus-regular';
+}
+
+*{
+    box-sizing: border-box;
+}
+input {
+    outline: none;
+}

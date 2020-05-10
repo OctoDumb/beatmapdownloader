@@ -1,0 +1,9 @@
+@import '../../Vars.scss';
+
+.content {
+    width: 100%;
+    flex-grow: 1;
+    background: $color2;
+    display: flex;
+    flex-direction: column;
+}
