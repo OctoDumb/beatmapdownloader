@@ -6,7 +6,7 @@ export default class WindowControl extends Component {
     render() {
         return (
             <div className="window-control">
-                Icon
+                <div className="draggable"></div>
                 <WindowControlButtons />
             </div>
         )

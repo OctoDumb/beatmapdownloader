@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Content.scss';
 import Search from './Search/Search';
-import Sort from './Sort/Sort';
 import Maps from './Maps/Maps';
 
 export default class Content extends Component {
@@ -9,7 +8,6 @@ export default class Content extends Component {
         return (
             <div className="content">
                 <Search />
-                <Sort />
                 <Maps />
             </div>
         )

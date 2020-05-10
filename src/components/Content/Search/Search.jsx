@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import './Search.scss';
+import Query from './Query/Query';
+import Params from './Params/Params';
 
 export default class Search extends Component {
-    render() {
+    render () {
         return (
-            <div className="content-search">
-                <input className="content-search__input" type="text" placeholder="Search" />
+            <div>
+                <Query />
+                <Params />
             </div>
         )
     }
