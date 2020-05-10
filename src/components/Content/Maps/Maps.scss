@@ -57,7 +57,7 @@
         top: 0;
         left: 0;
         z-index: 2;
-        background-color: rgba(#000, .8 );
+        background-color: rgba(#000, .7 );
     }
 }
 
@@ -82,6 +82,7 @@
 }
 
 .map-content-information {
+    position: relative;
     padding-top: 4px;
     display: flex;
     flex-direction: column;
@@ -94,5 +95,13 @@
     }
     &__mapper {
         color: $fontColor3;
+    }
+    &__download {
+        font-size: 20px;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        color: white;
+        cursor: pointer;
     }
 }

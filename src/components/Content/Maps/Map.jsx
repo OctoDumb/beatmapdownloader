@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MapIcon from './MapIcon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class Map extends Component {
     render() {
@@ -22,6 +23,7 @@ export default class Map extends Component {
                     <div className="map-content-information">
                         <span className="map-content-information__text">mapped by <span className="map-content-information__mapper">{this.props.mapper}</span></span>
                         <span className="map-content-information__text">{this.props.source}</span>
+                        <FontAwesomeIcon className="map-content-information__download" icon="download" />
                         <MapIcon maps={this.props.maps || []}/>
                     </div>
                 </div>

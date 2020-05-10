@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Tippy, {useSingleton} from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; 
+import 'tippy.js/animations/scale-subtle.css';
+
 import { ReactComponent as Osu } from './_Icons/standart-icon.svg';
 import { ReactComponent as Taiko } from './_Icons/taiko-icon.svg';
 import { ReactComponent as Fruits } from './_Icons/catch-icon.svg';
@@ -6,14 +10,8 @@ import { ReactComponent as Mania } from './_Icons/mania-icon.svg';
 
 import './MapIcon.scss';
 
-export default class MapIcon extends Component {
-    componentDidMount () {
-        this.setState({
-            colors: this.props.maps.map(m => this.getDifficultyColor(m.stars))
-        })
-    }
-
-    getDifficultyColor(stars) {
+export default function MapIcon(props) {
+    function getDifficultyColor(stars) {
         if(stars < 2) return "diff-easy";
         else if(stars < 2.7) return "diff-normal";
         else if(stars < 4) return "diff-hard";
@@ -22,16 +20,36 @@ export default class MapIcon extends Component {
         else return "diff-expertplus";
     }
 
-    render() {
+    function getDifficultyTooltip(diff) {
         return (
-            <div className="icons">
-                {this.props.maps.map(m => {
-                    let color = this.getDifficultyColor(m.stars);
-                    return (
-                        <Osu className={color} style={{width: '20px', height: '20px'}} />
-                    )
-                })}
+            <div className="icons-tooltip">
+                <span>{diff.version}</span>
+                <span>{diff.stars}★</span>
             </div>
         )
     }
+
+    const [source, target] = useSingleton();
+
+    return (
+        <div className="icons">
+            <Tippy 
+                singleton={source} 
+                delay={200}
+                moveTransition='transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
+                placement="bottom"
+            />
+            {props.maps.map((m, i) => {
+                let color = getDifficultyColor(m.stars);
+                return (
+                    <Tippy
+                        singleton={target }
+                        content={getDifficultyTooltip(m)}
+                    >
+                        <Osu title="" className={color} style={{width: '20px', height: '20px'}} />
+                    </Tippy>
+                )
+            })}
+        </div>
+    )
 }
