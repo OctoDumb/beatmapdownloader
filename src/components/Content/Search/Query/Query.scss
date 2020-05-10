@@ -1,5 +1,4 @@
 @import '../../../../Vars.scss';
-@import '../../../../Fonts.scss';
 
 .content-query {
     width: 100%;
@@ -15,7 +14,7 @@
         border: 2px solid $color3;
         box-sizing: border-box;
         background: $color4;
-        font-family: 'torus-semibold';
+        font-weight: 500;
         font-size: 22px;
         color: $fontColor1;
     }
