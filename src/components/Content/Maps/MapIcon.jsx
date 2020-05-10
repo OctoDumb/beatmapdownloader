@@ -3,10 +3,10 @@ import Tippy, {useSingleton} from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; 
 import 'tippy.js/animations/scale-subtle.css';
 
-import { ReactComponent as Osu } from './_Icons/standart-icon.svg';
-import { ReactComponent as Taiko } from './_Icons/taiko-icon.svg';
-import { ReactComponent as Fruits } from './_Icons/catch-icon.svg';
-import { ReactComponent as Mania } from './_Icons/mania-icon.svg';
+import { ReactComponent as Osu } from '../../../icons/standart-icon.svg';
+import { ReactComponent as Taiko } from '../../../icons/taiko-icon.svg';
+import { ReactComponent as Fruits } from '../../../icons/catch-icon.svg';
+import { ReactComponent as Mania } from '../../../icons/mania-icon.svg';
 
 import './MapIcon.scss';
 
@@ -46,7 +46,7 @@ export default function MapIcon(props) {
                         singleton={target }
                         content={getDifficultyTooltip(m)}
                     >
-                        <Osu title="" className={color} style={{width: '20px', height: '20px'}} />
+                        <Mania title="" className={color} style={{width: '20px', height: '20px'}} />
                     </Tippy>
                 )
             })}

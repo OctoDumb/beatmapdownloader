@@ -14,6 +14,9 @@
         height: 30px;
         display: flex;
         justify-content: space-between;
+        &--icon {
+            margin-bottom: 10px;
+        }
         &__title {
             width: 80px;
             font-weight: 200;
@@ -33,11 +36,21 @@
             input {
                 display: none;
             }
-            &>input:checked+span {
+            &>input:checked + span, 
+            &>input:checked + svg path,
+            &>input:checked + svg circle,
+            &>input:checked + svg rect
+            {
+                fill: white;
                 color: white;
                 cursor: pointer;
             }
-            &>input:not(:checked)+span {
+            &>input:not(:checked) + span, 
+            &>input:not(:checked) + svg path, 
+            &>input:not(:checked) + svg circle,
+            &>input:not(:checked) + svg rect 
+            {
+                fill: $fontColor2;
                 color: $fontColor2;
                 cursor: pointer;
             }

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import './Params.scss';
 
+import { ReactComponent as Osu } from '../../../../icons/standart-icon.svg';
+import { ReactComponent as Taiko } from '../../../../icons/taiko-icon.svg';
+import { ReactComponent as Fruits } from '../../../../icons/catch-icon.svg';
+import { ReactComponent as Mania } from '../../../../icons/mania-icon.svg';
+
 export default class Params extends Component {
     setActive (e) {
         e.target.className !== 'content-params-row__option--active' ? e.target.className = 'content-params-row__option--active' : e.target.className = 'content-params-row__option'
@@ -9,6 +14,27 @@ export default class Params extends Component {
     render() {
         return (
             <div className="content-params">
+                <div className="content-params-row content-params-row--icon">
+                    <span className="content-params-row__title"></span>
+                    <div className="content-params-row__options">
+                        <label className="content-params-row__option">
+                            <input type="radio" name="params-modes"/>
+                            <Osu title="" style={{width: '28px', height: '28px'}} />
+                        </label>
+                        <label className="content-params-row__option">
+                            <input type="radio" name="params-modes"/>
+                            <Taiko title="" style={{width: '28px', height: '28px'}} />
+                        </label>
+                        <label className="content-params-row__option">
+                            <input type="radio" name="params-modes"/>
+                            <Fruits title="" style={{width: '28px', height: '28px'}} />
+                        </label>
+                        <label className="content-params-row__option">
+                            <input type="radio" name="params-modes"/>
+                            <Mania title="" style={{width: '28px', height: '28px'}} />
+                        </label>
+                    </div>
+                </div>
                 <div className="content-params-row">
                     <span className="content-params-row__title">General</span>
                     <div className="content-params-row__options">

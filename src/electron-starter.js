@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain: ipc } = require('electron');
+const { app, BrowserWindow, ipcMain: ipc, remote } = require('electron');
 const path = require('path');
 
 const startURL = process.env.ELECTRON_START_URL || url.format({
@@ -29,6 +29,7 @@ function createWindow() {
 ipc.on("pls", (e) => {
     e.returnValue = startURL;
 });
+
 
 app.on('ready', createWindow);
 

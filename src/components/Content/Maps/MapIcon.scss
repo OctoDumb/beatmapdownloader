@@ -22,37 +22,37 @@
 }
 
 .diff-easy {
-    path {
+    path, circle, rect   {
         fill: #88B300 
     }
 }
 
 .diff-normal {
-    path {
+    path, circle, rect   {
         fill: #66CCFF 
     }
 }
 
 .diff-hard {
-    path {
+    path, circle, rect   {
         fill: #FFCC22
     }
 }
 
 .diff-insane {
-    path {
+    path, circle, rect   {
         fill: #FF66AA
     }
 }
 
 .diff-expert {
-    path {
+    path, circle, rect   {
         fill: #8866EE
     }
 }
 
 .diff-expertplus {
-    path {
+    path, circle, rect   {
         fill: #000000
     }
 } 
