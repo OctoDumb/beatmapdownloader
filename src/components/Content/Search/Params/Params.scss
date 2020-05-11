@@ -35,6 +35,13 @@
             input {
                 display: none;
             }
+            input + span,
+            input + svg path,
+            input + svg circle,
+            input + svg rect {
+                transition: fill .2s ease, color .2s ease;
+                cursor: pointer;
+            }
             &>input:checked + span, 
             &>input:checked + svg path,
             &>input:checked + svg circle,
@@ -42,7 +49,6 @@
             {
                 fill: white;
                 color: white;
-                cursor: pointer;
             }
             &>input:not(:checked) + span, 
             &>input:not(:checked) + svg path, 
@@ -51,7 +57,6 @@
             {
                 fill: $fontColor2;
                 color: $fontColor2;
-                cursor: pointer;
             }
             &:last-child {
                 margin-right: 0px;
