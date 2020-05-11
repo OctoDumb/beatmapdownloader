@@ -10,7 +10,7 @@ export default class Config {
         let data = JSON.parse(!window.fs.existsSync(path) ? {} : window.fs.readFileSync(path).toString());
         this.username = data.username || "";
         this.refresh_token = data.refresh_token || "";
-        this.songs_path = data.songs_path = "";
+        this.songs_path = data.songs_path || "";
         this.save();
     }
 
