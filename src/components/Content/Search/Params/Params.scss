@@ -11,12 +11,10 @@
         box-sizing: border-box;
         width: 100%;
         padding-left: 5%;
-        height: 30px;
+        margin: 5px 0;
         display: flex;
         justify-content: space-between;
-        &--icon {
-            margin-bottom: 10px;
-        }
+        align-items: center;
         &__title {
             width: 80px;
             font-weight: 200;
@@ -27,6 +25,7 @@
             width: 90%;
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
         }
         &__option {
             font-weight: 200;
