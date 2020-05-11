@@ -13,6 +13,10 @@ class BeatmapsetCovers {
     }
 }
 
+function sortBeatmaps(a, b) {
+    return a.mode === b.mode ? a.stars - b.stars : a.mode - b.mode;
+}
+
 export default class Beatmapset {
     constructor(data) {
         /** 
@@ -105,6 +109,6 @@ export default class Beatmapset {
          * Array of beatmaps in mapset (unsorted)
          * @type {Beatmap[]}
          */
-        this.beatmaps = data.beatmaps.map(m => new Beatmap(m));
+        this.beatmaps = data.beatmaps.map(m => new Beatmap(m)).sort(sortBeatmaps);
     }
 }

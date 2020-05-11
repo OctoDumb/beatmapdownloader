@@ -7,10 +7,6 @@ import { ReactComponent as Fruits } from '../../../../icons/catch-icon.svg';
 import { ReactComponent as Mania } from '../../../../icons/mania-icon.svg';
 
 export default class Params extends Component {
-    state = {
-        recommended: 7.06
-    };
-
     setActive (e) {
         e.target.className !== 'content-params-row__option--active' ? e.target.className = 'content-params-row__option--active' : e.target.className = 'content-params-row__option'
     }
@@ -48,7 +44,7 @@ export default class Params extends Component {
                     <div className="content-params-row__options">
                         <label className="content-params-row__option">
                             <input type="checkbox" name="params-general" />
-                            <span>Recommended difficulty ({this.state.recommended})</span>
+                            <span>Recommended difficulty ({this.props.recommended.toFixed(2)})</span>
                         </label>
                         <label className="content-params-row__option">
                             <input type="checkbox" name="params-general" />

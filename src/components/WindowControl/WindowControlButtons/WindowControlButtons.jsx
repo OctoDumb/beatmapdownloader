@@ -7,12 +7,14 @@ export default class WindowControlButtons extends Component {
 
         this.win = window.electron.remote.getCurrentWindow();
 
-        this.win.on("maximize", () => this.setState({isMaximized: true}));
-        this.win.on("unmaximize", () => this.setState({isMaximized: false}));
-
         this.state = {
             isMaximized: this.win.isMaximized()
         }
+    }
+
+    componentDidMount() {
+        this.win.on("maximize", () => this.setState({isMaximized: true}));
+        this.win.on("unmaximize", () => this.setState({isMaximized: false}));
     }
 
     windowMaximize() {

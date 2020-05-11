@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Tippy, {useSingleton} from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; 
 import 'tippy.js/animations/scale-subtle.css';
@@ -6,7 +6,7 @@ import 'tippy.js/animations/scale-subtle.css';
 import { ReactComponent as Osu } from '../../../icons/standart-icon.svg';
 import { ReactComponent as Taiko } from '../../../icons/taiko-icon.svg';
 import { ReactComponent as Fruits } from '../../../icons/catch-icon.svg';
-import { ReactComponent as Mania } from '../../../icons/mania-icon.svg';
+import { ReactComponent as Mania } from '../../../icons/mania-icon.svg' ;
 
 import './MapIcon.scss';
 
@@ -29,27 +29,67 @@ export default function MapIcon(props) {
         )
     }
 
+    function getDifficultyIcon(diff) {
+        let props = { title: "", className: getDifficultyColor(diff.stars), style: {width: '20px', height: '20px'} };
+
+        switch(diff.mode) {
+            case 1:
+                return (<Taiko {...props} />)
+
+            case 2:
+                return (<Fruits {...props} />)
+
+            case 3:
+                return (<Mania {...props} />)
+
+            default:
+                return (<Osu {...props} />)
+        }
+    }
+
     const [source, target] = useSingleton();
+
+    function getShorten() {
+        let hardest = [].fill(null, 0, 3);
+        for(let map of props.maps) {
+            if(!hardest[map.mode])
+                hardest[map.mode] = map;
+            else if(hardest[map.mode].stars < map.stars)
+                hardest[map.mode] = map;
+        }
+        return hardest.map(h => h ? (
+            <div style={{display: "flex", alignItems: "center"}} key={"map-" + h.id + "h"}>
+                <Tippy
+                    singleton={target}
+                    content={getDifficultyTooltip(h)}
+                    key={"map-" + h.id}
+                >
+                    {getDifficultyIcon(h)}
+                </Tippy>
+                <span style={{color: "white"}}>{props.maps.filter(m => m.mode === h.mode).length}</span>
+            </div>
+        ) : null);
+    }
 
     return (
         <div className="icons">
             <Tippy 
                 singleton={source} 
-                delay={200}
+                delay={0}
                 moveTransition='transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
                 placement="bottom"
             />
-            {props.maps.map((m, i) => {
-                let color = getDifficultyColor(m.stars);
+            {props.maps.length <= 8 ? props.maps.map((m) => {
                 return (
                     <Tippy
-                        singleton={target }
+                        singleton={target}
                         content={getDifficultyTooltip(m)}
+                        key={"map-" + m.id}
                     >
-                        <Mania title="" className={color} style={{width: '20px', height: '20px'}} />
+                        {getDifficultyIcon(m)}
                     </Tippy>
                 )
-            })}
+            }) : getShorten()}
         </div>
     )
 }

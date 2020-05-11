@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain: ipc, remote } = require('electron');
 const path = require('path');
+const url = require('url');
 
 const startURL = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/../build/index.html'),
@@ -7,7 +8,7 @@ const startURL = process.env.ELECTRON_START_URL || url.format({
     slashes: true
 });
 
-function createWindow() {
+function createWindow() {   
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -16,8 +17,14 @@ function createWindow() {
         show: false,
         frame: false,
         webPreferences: {
+            webSecurity: false,
             nodeIntegration: true,
-            preload: path.join(__dirname, "preload.js")
+            preload: path.join(__dirname, "preload.js"),
+            additionalArguments: [
+                "--allow-file-access-from-files",
+                "--disable-web-security",
+                "--disable-features=CrossSiteDocumentBlockingIfIsolating"
+            ]
         }
     });
 
