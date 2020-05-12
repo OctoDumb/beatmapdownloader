@@ -7,20 +7,6 @@ import { ReactComponent as Fruits } from '../../../../icons/catch-icon.svg';
 import { ReactComponent as Mania } from '../../../../icons/mania-icon.svg';
 
 export default class Params extends Component {
-    state = {
-        params: {
-            query: undefined,
-            status: undefined,
-            mode: null,
-            general: [],
-            cursor: undefined
-        }
-    }
-
-    async componentDidUpdate(prevProps, prevState) {
-        this.state.params !== prevState.params && await this.props.load(this.state.params)
-    }
-
     setActive (e) {
         e.target.className !== 'content-params-row__option--active' ? e.target.className = 'content-params-row__option--active' : e.target.className = 'content-params-row__option'
     }
@@ -36,12 +22,7 @@ export default class Params extends Component {
                         >
                             <input type="radio" name="params-modes" defaultChecked />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        mode: null
-                                    }
-                                }); console.log(this.state)}}
+                                onClick={() => {this.props.addMode(null)}}
                             >
                                 Any
                             </span>
@@ -53,12 +34,7 @@ export default class Params extends Component {
                             <Osu 
                                 title="" 
                                 style={{width: '28px', height: '28px'}}
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        mode: 0
-                                    }
-                            }); console.log(this.state)}} 
+                                onClick={() => {this.props.addMode(0)}} 
                             />
                         </label>
                         <label 
@@ -68,12 +44,7 @@ export default class Params extends Component {
                             <Taiko 
                                 title="" 
                                 style={{width: '28px', height: '28px'}} 
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        mode: 1
-                                    }
-                                }); console.log(this.state)}}
+                                onClick={() => {this.props.addMode(1)}}
                             />
                         </label>
                         <label 
@@ -83,12 +54,7 @@ export default class Params extends Component {
                             <Fruits 
                                 title="" 
                                 style={{width: '28px', height: '28px'}} 
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        mode: 2
-                                    }
-                                }); console.log(this.state)}}
+                                onClick={() => {this.props.addMode(2)}}
                             />
                         </label>
                         <label 
@@ -98,12 +64,7 @@ export default class Params extends Component {
                             <Mania 
                                 title="" 
                                 style={{width: '28px', height: '28px'}}
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        mode: 3
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addMode(3)}} 
                             />
                         </label>
                     </div>
@@ -114,23 +75,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="checkbox" name="params-general" />
                             <span
-                                onClick={() => {
-                                    !this.state.params.general.find(g => g === 'recommended') ? 
-                                    this.setState({
-                                        params: {
-                                            ...this.state.params,
-                                            general: [...this.state.params.general, 'recommended']
-                                        }
-                                    }) : 
-                                    this.setState({
-                                        params: {
-                                            ...this.state.params,
-                                            general: this.state.params.general.filter(g => g !== 'recommended')
-                                        }
-                                    })
-                                    
-                                    console.log(this.state)
-                                }} 
+                                onClick={() => {this.props.addGeneral('recommended')}} 
                             >
                                 Recommended difficulty ({this.props.recommended.toFixed(2)})
                             </span>
@@ -138,22 +83,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="checkbox" name="params-general" />
                             <span
-                                onClick={() => {
-                                    !this.state.params.general.find(g => g === 'converts') ? 
-                                    this.setState({
-                                        params: {
-                                            ...this.state.params,
-                                            general: [...this.state.params.general, 'converts']
-                                        }
-                                    }) : 
-                                    this.setState({
-                                        params: {
-                                            ...this.state.params,
-                                            general: this.state.params.general.filter(g => g !== 'converts')
-                                        }
-                                    })
-                                    console.log(this.state)
-                                }} 
+                                onClick={() => {this.props.addGeneral('converts')}} 
                             >
                                 Include converted beatmaps
                             </span>
@@ -166,12 +96,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories"/>
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'any'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('any')} }
                             >
                                 Any
                             </span>
@@ -179,12 +104,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" defaultChecked />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'leaderboard'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('leaderboard')}} 
                             >
                                 Has Leaderboard
                             </span>
@@ -192,12 +112,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'ranked'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('ranked')}} 
                             >
                                 Ranked
                             </span>
@@ -205,12 +120,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'qualified'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('qualified')}} 
                             >
                                 Qualified
                             </span>
@@ -218,12 +128,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'loved'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('loved')}} 
                             >
                                 Loved
                             </span>
@@ -231,12 +136,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'favorites'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('favorites')}} 
                             >
                                 Favorites
                             </span>
@@ -244,12 +144,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'pending'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('pending')}} 
                             >
                                 Pending and WIP
                             </span>
@@ -257,12 +152,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'graveyard'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('graveyard')}} 
                             >
                                 Graveyard
                             </span>
@@ -270,12 +160,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span 
-                                onClick={() => {this.setState({
-                                    params: {
-                                        ...this.state.params,
-                                        status: 'my'
-                                    }
-                                }); console.log(this.state)}} 
+                                onClick={() => {this.props.addCategory('my')}} 
                             >
                                 My Maps
                             </span>
