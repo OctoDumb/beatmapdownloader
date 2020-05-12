@@ -1,5 +1,6 @@
 {
   "name": "beatmapdownloader",
+  "author": "OctoDumb",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +12,6 @@
     "@testing-library/user-event": "^7.1.2",
     "@tippyjs/react": "^4.0.2",
     "axios": "^0.19.2",
-    "node-sass": "^4.14.1",
     "normalize.css": "^8.0.1",
     "querystring": "^0.2.0",
     "react": "^16.13.1",
@@ -23,16 +23,15 @@
   "homepage": "./",
   "main": "src/electron-starter.js",
   "scripts": {
-    "start": "nf start -p 4500",
+    "start": "concurrently \"npm run react-start\" \"wait-on http://localhost:4500 && npm run electron-start\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron": "electron .",
-    "electron-start": "node src/electron-wait-react",
+    "electron-start": "electron .",
     "react-start": "react-scripts start",
-    "pack": "build --dir",
-    "dist": "npm run build && build",
-    "postinstall": "install-all-deps"
+    "pack": "electorn-builder build --dir",
+    "dist": "npm run build && electron-builder build",
+    "postinstall": "electron-builder install-all-deps"
   },
   "build": {
     "appId": "org.octodumb.beatmapdownloader",
@@ -56,7 +55,10 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "electron": "^8.2.5",
-    "electron-builder": "^22.6.0"
+    "electron-builder": "^22.6.0",
+    "node-sass": "^4.14.1",
+    "wait-on": "^5.0.0"
   }
 }

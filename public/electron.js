@@ -1,12 +1,8 @@
-const { app, BrowserWindow, ipcMain: ipc } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const startURL = process.env.ELECTRON_START_URL || url.format({
-    pathname: path.join(__dirname, '/../build/index.html'),
-    protocol: 'file:',
-    slashes: true
-});
+const isDev = require('electron-is-dev');
 
 function createWindow() {   
     const mainWindow = new BrowserWindow({
@@ -28,15 +24,16 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadURL(startURL);
+    mainWindow.loadURL(isDev ? 'http://localhost:4500' : url.format({
+        pathname: path.join(__dirname, '../build/index.html'),
+        protocol: 'file:',
+        slashes: true
+    }));
+
+    mainWindow.on('closed', () => mainWindow = null);
 
     mainWindow.on('ready-to-show', () => mainWindow.show());
 }
-
-ipc.on("pls", (e) => {
-    e.returnValue = startURL;
-});
-
 
 app.on('ready', createWindow);
 
