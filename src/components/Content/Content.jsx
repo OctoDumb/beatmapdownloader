@@ -8,7 +8,8 @@ export default class Content extends Component {
     state = {
         mapsets: [],
         recommended: 0.00,
-        reauth: false
+        reauth: false,
+        loading: false
     };
 
     componentDidMount() {
@@ -19,6 +20,8 @@ export default class Content extends Component {
     }
 
     async load(params, nextPage = false) {
+        if(this.state.loading) return;
+        this.setState({ loading: true });
         let { beatmapsets, recommended, cursor } = await window.APIClient.getBeatmapsets(
             Object.assign({}, params, nextPage ? {
                 cursor: encodeURI(this.state.cursor)
@@ -26,6 +29,7 @@ export default class Content extends Component {
         );
 
         this.setState({
+            loading: false,
             mapsets: beatmapsets,
             recommended, cursor
         }); 
