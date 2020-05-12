@@ -79,7 +79,7 @@ export default function MapIcon(props) {
                 moveTransition='transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
                 placement="bottom"
             />
-            {props.maps.length <= 8 ? props.maps.map((m) => {
+            {props.maps.length <= 12 ? props.maps.map((m) => {
                 return (
                     <Tippy
                         singleton={target}
