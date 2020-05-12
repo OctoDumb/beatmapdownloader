@@ -29,7 +29,6 @@ export default class Login extends Component {
             this.songsSubmit(true);
     }
 
-    
     songsSubmit(ignore) {
         if(!ignore) {
             window.Config.songs_path = this.state.path;

@@ -18,8 +18,8 @@ export default class Content extends Component {
             this.load();
     }
 
-    async load() {
-        let { beatmapsets, recommended } = await window.APIClient.getBeatmapsets();
+    async load(params) {
+        let { beatmapsets, recommended } = await window.APIClient.getBeatmapsets(params);
 
         this.setState({
             mapsets: beatmapsets,
@@ -34,7 +34,7 @@ export default class Content extends Component {
             )
         return (
             <div className="content">
-                <Search recommended={this.state.recommended} />
+                <Search recommended={this.state.recommended} load={this.load.bind(this)}/>
                 <Maps mapsets={this.state.mapsets} />
             </div>
         )

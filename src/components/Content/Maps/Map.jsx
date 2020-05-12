@@ -25,9 +25,15 @@ export default class Map extends Component {
 
         try {
             window.Downloader.add(mapset);
-            window.toastr.success(`${mapset.artist} - ${mapset.title} started downloading`);
+            window.toastr.success(`${mapset.artist} - ${mapset.title}`, "Download",{
+                progressBar: true,
+                progressAnimation: 'decreasing'
+            });
         } catch (e) {
-            window.toastr.error(`${mapset.artist} - ${mapset.title} can not be downloaded`);
+            window.toastr.error(`${mapset.artist} - ${mapset.title} \n`, "Can`t be downloaded",{
+                progressBar: true,
+                progressAnimation: 'decreasing'
+            });
         }
     }
     

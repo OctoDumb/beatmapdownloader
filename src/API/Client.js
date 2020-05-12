@@ -131,10 +131,11 @@ export default class Client {
      * @returns {{beatmapsets: Beatmapset[], cursor: { approved_date: String, _id: String }, recommended: Number}}
      */
     async getBeatmapsets(params = {}) {
+        /* console.log(typeof params.general || null) */
         let data = await this.request('/beatmapsets/search', { 
             q: params.query || undefined,
             s: params.status || 'leaderboard',
-            m: params.mode || undefined,
+            m: typeof params.mode === 'number' ? parseInt(params.mode) : false || undefined,
             c: params.general ? params.general.join('.') : undefined,
             cursor: params.cursor || undefined
         });

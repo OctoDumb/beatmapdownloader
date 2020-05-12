@@ -7,7 +7,7 @@ export default class Search extends Component {
         return (
             <div>
                 <Query />
-                <Params recommended={this.props.recommended} />
+                <Params recommended={this.props.recommended} load={this.props.load}/>
             </div>
         )
     }

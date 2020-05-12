@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import WindowControl from './components/WindowControl/WindowControl';
 import 'normalize.css';
 import './App.scss';
+import '../node_modules/toastr/toastr.scss'
 import Content from './components/Content/Content';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faDownload, faTimes, faWindowMinimize, faWindowMaximize, faWindowRestore, faFilm, faImage } from '@fortawesome/free-solid-svg-icons';
