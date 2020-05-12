@@ -1,7 +1,6 @@
-import qs from "querystring";
-import { ReadStream } from "fs";
+// import qs from "querystring";
+import stringify from "../qs";
 import Beatmapset from "./Beatmapset";
-import Config from "../Config";
 
 const axios = window.axios;
 
@@ -56,7 +55,7 @@ export default class Client {
     }
 
     /**
-     * Logges in with player's refresh_token
+     * Logs in with player's refresh_token
      * 
      * @returns {Promise<Boolean>} Returns `true` if the user was successfully logged in
      */
@@ -78,7 +77,7 @@ export default class Client {
      */
     async refresh() {
         if(!this.refresh_token)
-            throw "No refresh token";
+            throw new Error("No refresh token");
         let { data } = await axios.post('https://osu.ppy.sh/oauth/token', {
             client_id: 5,
             client_secret: "FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk",
@@ -112,7 +111,7 @@ export default class Client {
         if(Date.now() > this.refreshAfter)
             await this.refresh();
         try {
-            let { data } = await this.api.get(`${method}?${qs.stringify(query)}`, {
+            let { data } = await this.api.get(`${method}?${stringify(query)}`, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
@@ -136,7 +135,8 @@ export default class Client {
             s: params.status || 'leaderboard',
             m: typeof params.mode === 'number' ? parseInt(params.mode) : false || undefined,
             c: params.general ? params.general.join('.') : undefined,
-            cursor: params.cursor || undefined
+            "cursor[approved_date]": params.cursor?.approved_date || undefined,
+            "cursor[_id]": params.cursor?._id || undefined
         });
         return {
             beatmapsets: data.beatmapsets.map(s => new Beatmapset(s)),
@@ -154,7 +154,7 @@ export default class Client {
      */
     async downloadBeatmapset(mapsetId) {
         if(!mapsetId)
-            throw "No mapset ID provided";
+            throw new Error("No mapset ID provided");
         let { data, headers } = await this.api.get(`/beatmapsets/${mapsetId}/download`, {
             responseType: "stream",
             headers: {
