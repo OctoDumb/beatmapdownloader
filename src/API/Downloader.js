@@ -1,6 +1,3 @@
-import Client from "./Client";
-import Beatmapset from "./Beatmapset";
-
 const limit = 2;
 
 export default class Downloader {
@@ -50,7 +47,7 @@ export default class Downloader {
      */
     add(mapset) {
         if(this.queue.find(q => q.mapset.id === mapset.id))
-            throw "This mapset is already in queue";
+            throw new Error("This mapset is already in queue");
         this.queue.push({ mapset, progress: 0 });
         if(this.queue.length <= limit)
             this.download(mapset);
