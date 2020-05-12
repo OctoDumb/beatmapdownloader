@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@tippyjs/react": "^4.0.2",
     "axios": "^0.19.2",
+    "electron-is-dev": "^1.2.0",
     "normalize.css": "^8.0.1",
     "querystring": "^0.2.0",
     "react": "^16.13.1",
@@ -21,7 +22,7 @@
     "toastr": "^2.1.4"
   },
   "homepage": "./",
-  "main": "src/electron-starter.js",
+  "main": "public/electron.js",
   "scripts": {
     "start": "concurrently \"npm run react-start\" \"wait-on http://localhost:4500 && npm run electron-start\"",
     "build": "react-scripts build",

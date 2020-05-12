@@ -1,5 +1,79 @@
 @import '../../../../Vars.scss';
 
+.header-scroll {
+    #general {
+        display: none;
+    }
+    #mode {
+        order: 2;
+        width: 280px;
+        @media screen and (max-width: 940px){
+            width: 170px;
+        }
+        @media screen and (max-width: 1330px){
+            width: 200px;
+        }
+        .content-params-row__title {
+            @media screen and (max-width: 1330px){
+                display: none;
+            }
+        }
+        .content-params-row__option {
+            @media screen and (max-width: 940px){
+                margin-right: 0;
+            }
+        }
+    }
+    #categories {
+        order: 1;
+        height: 30px;
+        width: 720px;
+        margin-right: 30px;
+        .content-params-row__title {
+            @media screen and (max-width: 1330px){
+                display: none;
+            }
+        }
+        @media screen and (max-width: 1243px){
+            width: auto;
+        }
+        @media screen and (max-width: 940px){
+            flex-wrap: nowrap;
+            width: 550px;
+            margin-right: 0;
+        }
+    }
+    .content-params {
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+        @media screen and (max-width: 1243px){
+            padding: 0 10px;
+        }
+        &-row{
+            width: auto;
+            justify-content: flex-start;
+            padding-left: 0;
+            &__title {
+                width: auto;
+                padding-right: 15px;
+                @media screen and (max-width: 1243px){
+                    font-size: 10px;
+                }
+            }
+            &__option {
+                @media screen and (max-width: 1243px){
+                    font-size: 10px;
+                }
+            }
+            &__options {
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
 .content-params {
     width: 100%;
     display: flex;
@@ -27,6 +101,10 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
         }
         &__option {
             font-weight: 200;

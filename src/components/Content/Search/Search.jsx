@@ -72,7 +72,7 @@ export default class Search extends Component {
 
     render () {
         return (
-            <div>
+            <div id='header'>
                 <Query 
                     addQuery={this.addQuery.bind(this)}
                 />

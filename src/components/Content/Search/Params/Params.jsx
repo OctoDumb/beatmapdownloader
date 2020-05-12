@@ -14,7 +14,7 @@ export default class Params extends Component {
     render() {
         return (
             <div className="content-params">
-                <div className="content-params-row">
+                <div className="content-params-row" id="mode">
                     <span className="content-params-row__title">Mode</span>
                     <div className="content-params-row__options">
                         <label 
@@ -69,7 +69,7 @@ export default class Params extends Component {
                         </label>
                     </div>
                 </div>
-                <div className="content-params-row">
+                <div className="content-params-row" id="general">
                     <span className="content-params-row__title">General</span>
                     <div className="content-params-row__options">
                         <label className="content-params-row__option">
@@ -90,7 +90,7 @@ export default class Params extends Component {
                         </label>
                     </div>
                 </div>
-                <div className="content-params-row">
+                <div className="content-params-row" id="categories">
                     <span className="content-params-row__title">Categories</span>
                     <div className="content-params-row__options">
                         <label className="content-params-row__option">
