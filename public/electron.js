@@ -1,10 +1,11 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
+const { default: installExtension, REACT_DEVELOPER_TOOLS, } = require('electron-devtools-installer');
 
 const isDev = require('electron-is-dev');
 
-function createWindow() {   
+async function createWindow() {   
     const mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -23,6 +24,8 @@ function createWindow() {
             ]
         }
     });
+
+    if (isDev) await installExtension(REACT_DEVELOPER_TOOLS);
 
     mainWindow.loadURL(isDev ? 'http://localhost:4500' : url.format({
         pathname: path.join(__dirname, '../build/index.html'),

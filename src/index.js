@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.jsx';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import Config from "./Config";
 import Client from "./API/Client";
 import Downloader from "./API/Downloader";
@@ -15,9 +15,9 @@ window.Downloader = new Downloader(window.APIClient);
 window.toastr = toastr;
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById('root')
 )
 
