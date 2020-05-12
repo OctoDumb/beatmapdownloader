@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './Query.scss';
+import { addQuery } from '../../../../redux/actions/searchParamsActions';
+import { connect } from 'react-redux';
 
-export default class Query extends Component {
+class Query extends Component {
     render() {
         return (
             <div className="content-query">
@@ -10,3 +12,15 @@ export default class Query extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {}
+}
+
+const dispatchStateToProps = dispatch => {
+    return {
+        addQuery: e => dispatch(addQuery(e)),
+    }
+}
+
+export default connect(mapStateToProps, dispatchStateToProps)(Query)

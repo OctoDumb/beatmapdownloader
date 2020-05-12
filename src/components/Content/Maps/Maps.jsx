@@ -9,10 +9,12 @@ export default class Search extends Component {
     }
 
     scroll(e) {
-        let yPos = e.nativeEvent.target.scrollTop;
+        let { scrollTop, scrollHeight, clientHeight } = e.nativeEvent.target
         const header = document.getElementById('header');
 
-        yPos >= 600 ? header.classList.add('header-scroll') : header.classList.remove('header-scroll')
+        scrollTop >= 600 ? header.classList.add('header-scroll') : header.classList.remove('header-scroll');
+
+        if (scrollHeight - scrollTop - clientHeight < 200) this.props.nextPage();
     }
 
     render() {

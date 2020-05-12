@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './Params.scss';
+import { addMode, addCategory, switchGeneral } from '../../../../redux/actions/searchParamsActions';
+import { connect } from 'react-redux';
 
 import { ReactComponent as Osu } from '../../../../icons/standart-icon.svg';
 import { ReactComponent as Taiko } from '../../../../icons/taiko-icon.svg';
 import { ReactComponent as Fruits } from '../../../../icons/catch-icon.svg';
 import { ReactComponent as Mania } from '../../../../icons/mania-icon.svg';
 
-export default class Params extends Component {
+class Params extends Component {
     setActive (e) {
         e.target.className = 'content-params-row__option' + e.target.className.endsWith("active") ? '' : "--active";
     }
@@ -171,3 +173,21 @@ export default class Params extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        status: state.category,
+        mode: state.mode,
+        general: state.general
+    }
+}
+
+const dispatchStateToProps = dispatch => {
+    return {
+        addMode: mode => dispatch(addMode(mode)),
+        addCategory: category => dispatch(addCategory(category)),
+        switchGeneral: gn => dispatch(switchGeneral(gn))
+    }
+}
+
+export default connect(mapStateToProps, dispatchStateToProps)(Params)
