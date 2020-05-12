@@ -30,7 +30,7 @@
     "eject": "react-scripts eject",
     "electron-start": "electron .",
     "react-start": "react-scripts start",
-    "pack": "electorn-builder build --dir",
+    "pack": "electron-builder build --dir",
     "dist": "npm run build && electron-builder build",
     "postinstall": "electron-builder install-all-deps"
   },

@@ -42,6 +42,7 @@ export default class Map extends Component {
 
         return (
             <div className="map">
+                <div className="progress"></div>
                 <div className="map-header"
                     style={{
                         background: `url("${mapset.covers.cover2x}")`,
