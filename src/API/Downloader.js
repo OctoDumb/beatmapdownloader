@@ -21,22 +21,22 @@ export default class Downloader {
     /**
      * @param {Number} mapsetId
      */
-    async download(mapsetId) {
+    async download(mapset) {
         let { createWriteStream } = window.fs;
 
-        let { stream, headers } = await this.client.downloadBeatmapset(mapsetId);
-        let writeStream = createWriteStream(`${window.Config.songs_path}/${mapsetId}.osz`);
+        let { stream, headers } = await this.client.downloadBeatmapset(mapset.id);
+        let writeStream = createWriteStream(`${window.Config.songs_path}/${mapset.id} ${mapset.artist} - ${mapset.title}.osz`);
 
         const totalLength = parseInt(headers['content-length']);
         let dlLength = 0;
         
         stream.on("data", (chunk) => {
             dlLength += chunk.length;
-            this.queue[this.queue.findIndex(q => q.mapset.id === mapsetId)].progress = dlLength / totalLength;
+            this.queue[this.queue.findIndex(q => q.mapset.id === mapset.id)].progress = dlLength / totalLength;
         });
 
         stream.on("end", () => {
-            this.queue.splice(this.queue.findIndex(q => q.mapset.id === mapsetId), 1);
+            this.queue.splice(this.queue.findIndex(q => q.mapset.id === mapset.id), 1);
             if(this.queue.length >= limit)
                 this.download(this.queue[1].mapset.id);
         });
@@ -53,6 +53,6 @@ export default class Downloader {
             throw "This mapset is already in queue";
         this.queue.push({ mapset, progress: 0 });
         if(this.queue.length <= limit)
-            this.download(mapset.id);
+            this.download(mapset);
     }
 }
