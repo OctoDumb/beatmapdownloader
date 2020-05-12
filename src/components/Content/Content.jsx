@@ -18,12 +18,16 @@ export default class Content extends Component {
             this.load();
     }
 
-    async load(params) {
-        let { beatmapsets, recommended } = await window.APIClient.getBeatmapsets(params);
+    async load(params, nextPage = false) {
+        let { beatmapsets, recommended, cursor } = await window.APIClient.getBeatmapsets(
+            Object.assign({}, params, nextPage ? {
+                cursor: encodeURI(this.state.cursor)
+            } : {})
+        );
 
         this.setState({
             mapsets: beatmapsets,
-            recommended
+            recommended, cursor
         }); 
     }
 

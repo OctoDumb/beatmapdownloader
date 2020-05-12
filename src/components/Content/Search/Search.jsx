@@ -10,29 +10,33 @@ export default class Search extends Component {
 
         this.state = {
             params: {
-                query: undefined,
-                status: undefined,
+                query: "",
+                status: 'leaderboard',
                 mode: null,
-                general: [],
-                cursor: undefined
+                general: []
             }
         }
-
-        this.addQuery = this.addQuery.bind(this);
     }
     
 
     async componentDidUpdate(prevProps, prevState) {
-        this.state.params !== prevState.params && await this.props.load(this.state.params)
+        if(this.state.params !== prevState.params) {
+            if(this.loadTimeout)
+                clearTimeout(this.loadTimeout);
+            this.loadTimeout = setTimeout(() => {
+                this.props.load(this.state.params);
+                this.loadTimeout = undefined;
+            }, 500);
+        }
     }
 
     addQuery(e) {
-        let string = e.target.value;
+        let query = e.target.value;
 
         this.setState({
             params: {
                 ...this.state.params,
-                query: string
+                query
             }
         });
     }
@@ -55,20 +59,15 @@ export default class Search extends Component {
         })
     }
 
-    addGeneral(general) {
-        !this.state.params.general.find(g => g === general) ? 
+    switchGeneral(gn) {
         this.setState({
             params: {
                 ...this.state.params,
-                general: [...this.state.params.general, general]
+                general: this.state.params.general.find(g => g === gn) ?
+                    this.state.params.general.filter(g => g !== gn) :
+                    [...this.state.params.general, general]
             }
-        }) : 
-        this.setState({
-            params: {
-                ...this.state.params,
-                general: this.state.params.general.filter(g => g !== general)
-            }
-        })
+        });
     }
 
     render () {
@@ -78,11 +77,11 @@ export default class Search extends Component {
                     addQuery={this.addQuery.bind(this)}
                 />
                 <Params 
-                    recommended={this.props.recommended} 
+                    recommended={this.props.recommended}
                     load={this.props.load}
                     addMode={this.addMode.bind(this)}
                     addCategory={this.addCategory.bind(this)}
-                    addGeneral={this.addGeneral}
+                    switchGeneral={this.switchGeneral.bind(this)}
                 />
             </div>
         )

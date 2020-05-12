@@ -8,7 +8,7 @@ import { ReactComponent as Mania } from '../../../../icons/mania-icon.svg';
 
 export default class Params extends Component {
     setActive (e) {
-        e.target.className !== 'content-params-row__option--active' ? e.target.className = 'content-params-row__option--active' : e.target.className = 'content-params-row__option'
+        e.target.className = 'content-params-row__option' + e.target.className.endsWith("active") ? '' : "--active";
     }
 
     render() {
@@ -75,7 +75,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="checkbox" name="params-general" />
                             <span
-                                onClick={() => {this.props.addGeneral('recommended')}} 
+                                onClick={() => {this.props.switchGeneral('recommended')}} 
                             >
                                 Recommended difficulty ({this.props.recommended.toFixed(2)})
                             </span>
@@ -83,7 +83,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="checkbox" name="params-general" />
                             <span
-                                onClick={() => {this.props.addGeneral('converts')}} 
+                                onClick={() => {this.props.switchGeneral('converts')}} 
                             >
                                 Include converted beatmaps
                             </span>
@@ -136,9 +136,9 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span
-                                onClick={() => {this.props.addCategory('favorites')}} 
+                                onClick={() => {this.props.addCategory('favourites')}} 
                             >
-                                Favorites
+                                Favourites
                             </span>
                         </label>
                         <label className="content-params-row__option">
@@ -160,7 +160,7 @@ export default class Params extends Component {
                         <label className="content-params-row__option">
                             <input type="radio" name="params-categories" />
                             <span 
-                                onClick={() => {this.props.addCategory('my')}} 
+                                onClick={() => {this.props.addCategory('mine')}} 
                             >
                                 My Maps
                             </span>
