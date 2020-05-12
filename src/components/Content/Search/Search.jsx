@@ -65,7 +65,7 @@ export default class Search extends Component {
                 ...this.state.params,
                 general: this.state.params.general.find(g => g === gn) ?
                     this.state.params.general.filter(g => g !== gn) :
-                    [...this.state.params.general, general]
+                    [...this.state.params.general, gn]
             }
         });
     }
