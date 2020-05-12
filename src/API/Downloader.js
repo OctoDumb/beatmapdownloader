@@ -22,7 +22,8 @@ export default class Downloader {
         let { createWriteStream } = window.fs;
 
         let { stream, headers } = await this.client.downloadBeatmapset(mapset.id);
-        let writeStream = createWriteStream(`${window.Config.songs_path}/${mapset.id} ${mapset.artist} - ${mapset.title}.osz`);
+        let fileName = `${mapset.id} ${mapset.artist} - ${mapset.title}.osz`.replace(/[^0-9A-Za-z!@#$%^&()_+=[\]'. -]/g, "");
+        let writeStream = createWriteStream(`${window.Config.songs_path}/${fileName}`);
 
         const totalLength = parseInt(headers['content-length']);
         let dlLength = 0;
