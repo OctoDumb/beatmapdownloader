@@ -62,7 +62,10 @@ class Content extends Component {
         return (
             <div className="content">
                 <Search recommended={this.state.recommended} />
-                <Maps nextPage={this.nextPage.bind(this)} mapsets={this.state.mapsets} />
+                <Maps 
+                    nextPage={this.nextPage.bind(this)} 
+                    mapsets={this.state.mapsets} 
+                />
             </div>
         )
     }

@@ -98,6 +98,8 @@ h
         border-radius: 5px;
         border: 2px solid $color3;
         overflow: hidden;
+        display: flex;
+        align-items: center;
     }
     &__title {
         color: white;
@@ -124,7 +126,7 @@ h
     }
     &__input {
         width: 70%;
-        height: 34px;
+        height: 100%;
         outline: none;
         border: 0;
         padding-left: 10px;
@@ -147,6 +149,7 @@ h
     }
     &__browse {
         width: 30%;
+        height: 100%;
         padding: 8px 10px;
         border: 0;
         background: $color4;

@@ -1,0 +1,57 @@
+.settings {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &__closeBtn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        font-size: 44px;
+        color: white;
+        cursor: pointer;
+        transition: .15s ease;
+        &:hover {
+            color: darken(white, 20%);
+        }
+    }
+    &__avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 25px;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: auto;
+        }
+        
+    }
+    .songspath, .authorization {
+        position: relative;
+        transform: none;
+        top: auto;
+        left: auto;
+    }
+    .authorization {
+        margin-bottom: 30px;
+    }
+}
+
+.settings-profile {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    input {
+        width: 100%;
+    }
+    /* align-items: center; */
+}
+
+.settings-inputs {
+    width: 200px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
