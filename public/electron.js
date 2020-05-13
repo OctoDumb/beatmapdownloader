@@ -14,7 +14,7 @@ async function createWindow() {
         show: false,
         frame: false,
         webPreferences: {
-            webSecurity: false,
+            webSecurity: isDev? false : true,
             nodeIntegration: true,
             preload: path.join(__dirname, "preload.js"),
             additionalArguments: isDev ? [
