@@ -7,7 +7,6 @@ export default class Settings extends Component {
     state = {
         username: "",
         password: "",
-        songsPathSelect: false,
         path: "",
     };
 
@@ -23,14 +22,15 @@ export default class Settings extends Component {
         });
     }
 
-    songsSubmit(ignore) {
-        if(!ignore) {
-            window.Config.songs_path = this.state.path;
-        }
+    changeUserData() {
         window.Config.username = this.state.username;
         window.Config.save();
         window.localStorage.setItem('password', this.state.password);
-        this.setState({ redirect: true })
+    }
+
+    songsSubmit() {
+        window.Config.songs_path = this.state.path;
+        window.Config.save();
     }
 
     render () {
@@ -65,7 +65,7 @@ export default class Settings extends Component {
                     </div>
                     <button 
                         className="authorization__submit" 
-                        /* onClick={() => this.setState({ songsPathSelect: true })} */
+                        onClick={() => this.changeUserData()}
                     >
                         Change
                     </button>
