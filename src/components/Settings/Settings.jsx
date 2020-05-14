@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Settings.scss'
 import { Link } from 'react-router-dom';
@@ -8,7 +9,19 @@ export default class Settings extends Component {
         username: "",
         password: "",
         path: "",
+        avatarUrl: "",
+        redirect: false
     };
+
+    async componentDidMount() {
+        await this.getUserAvatar()
+        console.log(this.state)
+    }
+
+    async getUserAvatar() {
+        await window.APIClient.request("me")
+        .then(r => {this.setState({ avatarUrl: r.avatar_url })})
+    }
 
     chooseSongsPath() {
         let p = window.electron.remote.dialog.showOpenDialogSync({
@@ -26,6 +39,7 @@ export default class Settings extends Component {
         window.Config.username = this.state.username;
         window.Config.save();
         window.localStorage.setItem('password', this.state.password);
+        this.setState({ redirect: true })
     }
 
     songsSubmit() {
@@ -34,6 +48,10 @@ export default class Settings extends Component {
     }
 
     render () {
+        if (this.state.redirect)
+            return (
+                <Redirect to="/app" />
+            )
         return (
             <div className='settings'>
                 <Link to="/app">
@@ -43,7 +61,7 @@ export default class Settings extends Component {
                     <span className="authorization__title">Change your osu! account</span>
                     <div className="settings-profile">
                         <div className="settings__avatar">
-                            <img src="https://a.ppy.sh/2?1537409912.jpeg" alt="avatar"/>
+                            {!this.state.avatarUrl ? <img src="https://osu.ppy.sh/images/layout/avatar-guest.png" alt="avatar" /> : <img src={this.state.avatarUrl} alt="avatar" />}
                         </div>
                         <div className="settings-inputs">
                             <input 

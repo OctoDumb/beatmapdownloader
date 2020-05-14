@@ -111,6 +111,8 @@ export default class Client {
         if(Date.now() > this.refreshAfter)
             await this.refresh();
         try {
+            console.log('Токен', this.token)
+            console.log('Рефреш токен', this.refresh_token)
             let { data } = await this.api.get(`${method}?${stringify(query)}`, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
