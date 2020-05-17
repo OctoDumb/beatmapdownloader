@@ -14,13 +14,9 @@ export default class Settings extends Component {
     };
 
     async componentDidMount() {
-        await this.getUserAvatar()
-        console.log(this.state)
-    }
-
-    async getUserAvatar() {
-        await window.APIClient.request("me")
-        .then(r => {this.setState({ avatarUrl: r.avatar_url })})
+        this.setState({
+            avatarUrl: window.localStorage.getItem('avatar')
+        });
     }
 
     chooseSongsPath() {
@@ -61,7 +57,7 @@ export default class Settings extends Component {
                     <span className="authorization__title">Change your osu! account</span>
                     <div className="settings-profile">
                         <div className="settings__avatar">
-                            {!this.state.avatarUrl ? <img src="https://osu.ppy.sh/images/layout/avatar-guest.png" alt="avatar" /> : <img src={this.state.avatarUrl} alt="avatar" />}
+                            <img src={this.state.avatarUrl || "https://osu.ppy.sh/images/layout/avatar-guest.png"} alt="avatar" />
                         </div>
                         <div className="settings-inputs">
                             <input 

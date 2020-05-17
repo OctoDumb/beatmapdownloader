@@ -18,10 +18,14 @@ export default class Authorization extends Component {
             window.localStorage.removeItem('password');
         }
 
+        let { avatar_url } = await window.APIClient.request('/me');
+        window.localStorage.setItem('avatar', avatar_url);
+
         if(loggedIn) {
             this.setState({ redirect: "app" });
         } else {
             window.Config.resetCredentials();
+            window.localStorage.setItem('login_error', "Couldn't log in with your account");
             this.setState({ redirect: "login" })
         }
     }
