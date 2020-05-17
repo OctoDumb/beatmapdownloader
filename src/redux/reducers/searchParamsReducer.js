@@ -6,7 +6,6 @@ let initialState = {
 };
 
 export default function search(state = initialState, action) {
-    /* console.log(state) */
     switch (action.type) {
         case 'ADD_MODE': {
             return {

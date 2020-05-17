@@ -111,8 +111,6 @@ export default class Client {
         if(Date.now() > this.refreshAfter)
             await this.refresh();
         try {
-            console.log('Токен', this.token)
-            console.log('Рефреш токен', this.refresh_token)
             let { data } = await this.api.get(`${method}?${stringify(query)}`, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
@@ -152,7 +150,7 @@ export default class Client {
      * 
      * @param {Number} mapsetId
      * 
-     * @returns {Promise<{ stream: ReadStream, headers: {[key: string]: any} }>} Returns ReadStream for mapset's `osz`
+     * @returns {Promise<{ stream: ReadStream, headers: {[key: string]: any} }>} Returns ReadStream with headers for mapset's `osz`
      */
     async downloadBeatmapset(mapsetId) {
         if(!mapsetId)

@@ -27,7 +27,6 @@ class Content extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         if(!window.APIClient.logged)
             this.setState({ reauth: true });
         else
