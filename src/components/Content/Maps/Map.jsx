@@ -3,6 +3,10 @@ import MapIcon from './MapIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class Map extends Component {
+    state = {
+        progress: 0
+    };
+
     getIconBubble() {
         let { video, storyboard } = this.props.mapset.extra;
         if(!video && !storyboard) return null;
@@ -25,16 +29,29 @@ export default class Map extends Component {
 
         try {
             window.Downloader.add(mapset);
-            window.toastr.success(`${mapset.artist} - ${mapset.title}`, "Download",{
+            window.toastr.success(`${mapset.artist} - ${mapset.title}`, "Download", {
                 progressBar: true,
                 progressAnimation: 'decreasing'
             });
         } catch (e) {
-            window.toastr.error(`${mapset.artist} - ${mapset.title} \n`, "Can`t be downloaded",{
+            window.toastr.error(`${mapset.artist} - ${mapset.title} \n`, e, {
                 progressBar: true,
                 progressAnimation: 'decreasing'
             });
         }
+    }
+
+    componentDidMount() {
+        let { id } = this.props.mapset;
+        window.Downloader.on('progress', data => {
+            if(data.id === id)
+                this.setState({ progress: data.progress });
+        });
+
+        window.Downloader.on('done', data => {
+            if(data.id === id)
+                this.setState({ progress: 0 });
+        });
     }
     
     render() {
@@ -42,7 +59,7 @@ export default class Map extends Component {
 
         return (
             <div className="map">
-                <div className="progress"></div>
+                <div className="progress" style={{ width: this.state.progress * 100 }}></div>
                 <div className="map-header"
                     style={{
                         background: `url("${mapset.covers.cover2x}")`,
