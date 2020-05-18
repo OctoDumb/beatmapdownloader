@@ -1,7 +1,7 @@
 {
   "name": "beatmapdownloader",
   "author": "OctoDumb",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
@@ -40,10 +40,11 @@
     "electron-start": "electron .",
     "react-start": "react-scripts start",
     "pack": "electron-builder build --dir",
-    "dist": "npm run build && electron-builder build",
+    "dist": "npm run build && node ./src/build",
     "postinstall": "electron-builder install-all-deps"
   },
   "build": {
+    "productName": "Beatmap Downloader",
     "appId": "org.octodumb.beatmapdownloader",
     "directories": {
       "buildResources": "public"
