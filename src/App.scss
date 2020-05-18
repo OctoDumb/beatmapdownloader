@@ -1,5 +1,6 @@
 @import './Vars.scss';
 @import './Fonts.scss';
+@import '~@sweetalert2/themes/dark/dark.scss';
 
 .App {
     width: 100%;
@@ -19,4 +20,9 @@
 
 input {
     outline: none;
+}
+
+.swal2-popup {
+    background: lighten(#19191A, 5%) !important;
+    font-family: 'Torus' !important;
 }

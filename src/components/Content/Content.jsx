@@ -5,7 +5,6 @@ import Search from './Search/Search';
 import Maps from './Maps/Maps';
 import { connect } from 'react-redux';
 
-
 class Content extends Component {
     state = {
         mapsets: [],
