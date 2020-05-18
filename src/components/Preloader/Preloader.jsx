@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import { Redirect }  from 'react-router-dom'
+import { Redirect }  from 'react-router-dom';
+import CheckUpdates from "../../Updater.js";
 import './Preloader.scss';
 
 export default class Preloader extends Component {
     state = {};
 
-    componentDidMount() {
+    async componentDidMount() {
+        if(!window.updatesChecked) {
+            window.updatesChecked = true;
+            try {
+                let nv = await CheckUpdates();
+                if(nv) {
+                    // Notify about an update available
+                }
+            } catch(e) {}
+        }
         if(!window.Config.refresh_token) {
             this.setState({ redirect: "login" });
         } else 

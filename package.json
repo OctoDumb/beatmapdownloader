@@ -23,10 +23,12 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "semver": "^7.3.2",
     "toastr": "^2.1.4"
   },
   "homepage": "./",
   "main": "public/electron.js",
+  "repository": "https://github.com/OctoDumb/beatmapdownloader",
   "scripts": {
     "start": "concurrently \"npm run react-start\" \"wait-on http://localhost:4500 && npm run electron-start\"",
     "build": "react-scripts build",
