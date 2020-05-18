@@ -50,7 +50,7 @@ export default class Map extends Component {
 
         window.Downloader.on('done', data => {
             if(data.id === id)
-                this.setState({ progress: 0 });
+                setTimeout(() => this.setState({ progress: 0 }), 5e3);
         });
     }
     
@@ -59,7 +59,9 @@ export default class Map extends Component {
 
         return (
             <div className="map">
-                <div className="progress" style={{ width: this.state.progress * 100 }}></div>
+                <div className="progress" style={{ width: `${this.state.progress}%` }}>
+                    {this.state.progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />} 
+                </div>
                 <div className="map-header"
                     style={{
                         background: `url("${mapset.covers.cover2x}")`,

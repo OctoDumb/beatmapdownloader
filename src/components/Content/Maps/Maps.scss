@@ -59,6 +59,14 @@
         left: 0;
         z-index: 3;
         transition: width .15s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &__icon {
+            font-size: 80px;
+            color: white;
+            opacity: .75;
+        }
     }
     &-header {
         width: 100%;
