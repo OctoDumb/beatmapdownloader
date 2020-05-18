@@ -7,7 +7,6 @@ This is a second reincarnation of [osu-Direct](https://github.com/OctoDumb/osu-D
 1. Install all modules using `npm`
 ```bash
 npm i
-npm i -g foreman # Required to run from Procfile
 ```
 
 2. Run
