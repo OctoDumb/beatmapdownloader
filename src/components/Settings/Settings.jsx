@@ -13,8 +13,9 @@ export default class Settings extends Component {
         redirect: false
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         this.setState({
+            path: window.Config.songs_path,
             avatarUrl: window.localStorage.getItem('avatar')
         });
     }
@@ -26,9 +27,10 @@ export default class Settings extends Component {
         });
         if(!p) return;
 
-        this.setState({
-            path: p[0].replace(/\\/g, '/')
-        });
+        window.Config.songs_path = p[0].replace(/\\/g, '/');
+        window.Config.save();
+
+        this.setState({ path: window.Config.songs_path });
     }
 
     changeUserData() {
