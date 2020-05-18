@@ -13,20 +13,3 @@ export default async function CheckUpdates() {
         return lastVersion;
     return null;
 }
-
-// export default class Updater {
-//     constructor() {
-//         this.version = semver.valid(semver.coerce(version));
-//     }
-
-//     async check() {
-//         let repo = repository.split("github.com/")[1];
-//         let { data } = await axios.get(`https://api.github.com/repos/${repo}/releases`);
-//         if(!data[0]) return null;
-//         let newVersion = data[0].tag_name;
-//         if(semver.lt(this.version, newVersion)) {
-//             return newVersion;
-//         }
-//         return null;
-//     }
-// }
