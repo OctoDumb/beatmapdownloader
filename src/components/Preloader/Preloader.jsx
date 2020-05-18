@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Redirect }  from 'react-router-dom';
 import CheckUpdates from "../../Updater.js";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+import '@sweetalert2/themes/dark/dark.scss';
 import './Preloader.scss';
+
+const Alert = withReactContent(Swal);
 
 export default class Preloader extends Component {
     state = {};
@@ -12,14 +18,30 @@ export default class Preloader extends Component {
             try {
                 let nv = await CheckUpdates();
                 if(nv) {
-                    // Notify about an update available
+                    Alert.fire({
+                        icon: "info",
+                        titleText: `Update ${nv}`,
+                        text: "A new version available! Open download page?",
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        reverseButtons: true,
+                        onClose: () => {
+                            this.redirect();
+                        }
+                    }).then(result => {
+                        if(result.value)
+                            window.electron.remote.openExternal(`https://github.com/OctoDumb/beatmapdownloader/releases/${nv}`);
+                        this.redirect();
+                    });
                 }
             } catch(e) {}
-        }
-        if(!window.Config.refresh_token) {
-            this.setState({ redirect: "login" });
-        } else 
-            this.setState({ redirect: "auth" });
+        } else this.redirect();
+    }
+
+    redirect() {
+        this.setState({ redirect: window.Config.refresh_token ? "auth" : "login" });
     }
 
     render() {
