@@ -47,6 +47,9 @@
     "appId": "org.octodumb.beatmapdownloader",
     "directories": {
       "buildResources": "public"
+    },
+    "win": {
+      "icon": "public/favicon.ico"
     }
   },
   "eslintConfig": {

@@ -22,7 +22,8 @@ async function createWindow() {
                 "--disable-web-security",
                 "--disable-features=CrossSiteDocumentBlockingIfIsolating"
             ] : []
-        }
+        },
+        icon: path.join(__dirname, 'favicon.ico')
     });
 
     if (isDev) await installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS]);
