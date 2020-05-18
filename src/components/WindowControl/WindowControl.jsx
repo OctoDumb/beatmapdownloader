@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import './WindowControl.scss';
 import WindowControlButtons from './WindowControlButtons/WindowControlButtons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import Settings from '../Settings/Settings';
+import './WindowControl.scss';
 
 export default class WindowControl extends Component {
+    state = {
+        settingsShowed: false
+    }
+
+    showSettings() {
+        this.setState({ settingsShowed: true })
+    }
+
+    closeSettings() {
+        this.setState({ settingsShowed: false })
+    }
+
     render() {
         return (
             <div className="window-control">
-                <Link className="window-control__settingsBtn" to="/settings">
-                    <FontAwesomeIcon icon="cog" />
-                </Link>
+                {this.state.settingsShowed && ReactDOM.createPortal(<Settings closeSettings={this.closeSettings.bind(this)} />, document.getElementById('content'))}
+                <FontAwesomeIcon
+                    className="window-control__settingsBtn"
+                    icon="cog"
+                    onClick={() => this.showSettings()}
+                />
                 <div className="draggable"></div>
                 <WindowControlButtons />
             </div>

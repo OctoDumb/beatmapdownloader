@@ -52,9 +52,11 @@ export default class Settings extends Component {
             )
         return (
             <div className='settings'>
-                <Link to="/app">
-                    <FontAwesomeIcon className="settings__closeBtn" icon="times" />
-                </Link>
+                <FontAwesomeIcon 
+                    className="settings__closeBtn" 
+                    icon="times"
+                    onClick={() => this.props.closeSettings()}
+                />
                 <div className="authorization settings__authorization">
                     <span className="authorization__title">Change your osu! account</span>
                     <div className="settings-profile">

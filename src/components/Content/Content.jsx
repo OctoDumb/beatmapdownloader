@@ -59,7 +59,7 @@ class Content extends Component {
                 <Redirect to="/auth" />
             )
         return (
-            <div className="content">
+            <div className="content" id="content" >
                 <Search recommended={this.state.recommended} />
                 <Maps 
                     nextPage={this.nextPage.bind(this)} 

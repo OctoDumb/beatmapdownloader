@@ -15,12 +15,14 @@
     background: $color1;
     &__settingsBtn {
         width: 30px;
+        padding: 5px;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 18px;
         color: white;
+        box-sizing: content-box;
         &:hover {
             background: lighten($color1, 6);
         }
