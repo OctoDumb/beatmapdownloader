@@ -2,7 +2,7 @@
 
 This is a second reincarnation of [osu-Direct](https://github.com/OctoDumb/osu-Direct), fully rewritten using React
 
-Brought to you by [OctopuSSX (Code)](https://github.com/uzervlad) and [TheEZIC (Design)](https://github.com/TheEZIC)
+Brought to you by [OctopuSSX (Code)](https://github.com/uzervlad) and [TheEZIC (Design and Code)](https://github.com/TheEZIC)
 
 ### How to run
 
