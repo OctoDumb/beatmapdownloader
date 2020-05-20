@@ -43,7 +43,7 @@ export default class Downloader extends EventEmitter {
             this.queue.splice(this.queue.findIndex(m => m.id === mapset.id), 1);
             this.emit('done', { id: mapset.id });
             if(this.queue.length >= limit)
-                this.download(this.queue[1].mapset.id);
+                this.download(this.queue[1]);
         });
 
         stream.pipe(writeStream);
