@@ -117,13 +117,16 @@
             input + span,
             input + svg path,
             input + svg circle,
-            input + svg rect {
+            input + svg ellipse,
+            input + svg rect 
+            {
                 transition: fill .2s ease, color .2s ease;
                 cursor: pointer;
             }
             &>input:checked + span, 
             &>input:checked + svg path,
             &>input:checked + svg circle,
+            &>input:checked + svg ellipse,
             &>input:checked + svg rect
             {
                 fill: white;
@@ -132,6 +135,7 @@
             &>input:not(:checked) + span, 
             &>input:not(:checked) + svg path, 
             &>input:not(:checked) + svg circle,
+            &>input:not(:checked) + svg ellipse,
             &>input:not(:checked) + svg rect 
             {
                 fill: $fontColor2;
