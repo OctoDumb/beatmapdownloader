@@ -1,1 +1,14 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 499.99 500.01"><defs><style>.cls-1{fill:#fff;}</style></defs><title>catch-icon</title><path class="cls-1" d="M250,0C388.07,0,500,111.93,500,250S388.07,500,250,500,0,388.07,0,250,111.93,0,250,0ZM456.78,248.45c0-113.71-92.18-205.89-205.89-205.89S45,134.74,45,248.45s92.18,205.89,205.89,205.89S456.78,362.16,456.78,248.45Z" transform="translate(-0.01 0.01)"/><circle class="cls-1" cx="347.53" cy="218.08" r="42.19"/><circle class="cls-1" cx="252.99" cy="349.72" r="42.19"/><circle class="cls-1" cx="158.13" cy="218.08" r="42.19"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.5, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<title>catch-icon</title>
+<path class="st0" d="M0,250C0,111.9,111.9,0,250,0s250,111.9,250,250S388.1,500,250,500S0,388.1,0,250z M248.4,43.2
+	c-113.7,0-205.9,92.2-205.9,205.9S134.7,455,248.4,455s205.9-92.2,205.9-205.9S362.1,43.2,248.4,43.2z"/>
+<circle class="st0" cx="218.1" cy="152.5" r="42.2"/>
+<ellipse transform="matrix(0.1602 -0.9871 0.9871 0.1602 49.8638 552.6279)" class="st0" cx="349.7" cy="247" rx="42.2" ry="42.2"/>
+<circle class="st0" cx="218.1" cy="341.9" r="42.2"/>
+</svg>
