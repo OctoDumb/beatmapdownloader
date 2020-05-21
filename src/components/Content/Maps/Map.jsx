@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import MapIcon from './MapIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { connect } from 'react-redux';
+import { changePreviewPlayStatus } from '../../../redux/actions/previewAction'
 
-export default class Map extends Component {
+class Map extends Component {
     state = {
-        progress: 0
+        progress: 0,
     };
+
+    playPreview() {
+        this.props.audioApi.src = this.props.mapset.preview;
+        this.props.audioApi.play();
+        this.setState({ previewIsPlayed: true });
+    }
+
+    pausePreview() {
+        this.props.audioApi.pause();
+        this.setState({ previewIsPlayed: false });
+    }
 
     getIconBubble() {
         let { video, storyboard } = this.props.mapset.extra;
@@ -22,6 +35,30 @@ export default class Map extends Component {
                     <FontAwesomeIcon icon="image" />
                 </div>
             )
+    }
+
+    getPreviewBtn() {
+        let { mapset, playStatus, previewId } = this.props;
+
+        if (playStatus && previewId === this.props.mapset.id ) {
+            return <FontAwesomeIcon 
+                        className="map-header__playBtn" 
+                        icon="pause"
+                        onClick={() => {
+                            this.pausePreview();
+                            this.props.changePreviewPlayStatus(false, mapset.id);
+                        }}
+                    />
+        }
+
+        return <FontAwesomeIcon 
+                    className="map-header__playBtn" 
+                    icon="play"
+                    onClick={() => {
+                        this.playPreview();
+                        this.props.changePreviewPlayStatus(true, mapset.id);
+                    }}
+                />
     }
 
     download() {
@@ -52,6 +89,10 @@ export default class Map extends Component {
             if(data.id === id)
                 setTimeout(() => this.setState({ progress: 0 }), 5e3);
         });
+
+        this.props.audioApi.addEventListener('ended', () => {
+            this.props.changePreviewPlayStatus(false);
+        })
     }
     
     render() {
@@ -69,11 +110,11 @@ export default class Map extends Component {
                         backgroundPosition: "center center",
                     }}
                 >
-                    
                     <div className="map-header__bubbles">
                         {this.getIconBubble()}
                         <span className="map-header__status">{mapset.status}</span>
                     </div>
+                    {this.getPreviewBtn()}
                     <div className="map-header-information">
                         <span className="map-header-information__title">{mapset.title}</span>
                         <span className="map-header-information__artist">{mapset.artist}</span>
@@ -95,3 +136,18 @@ export default class Map extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        playStatus: state.preview.playStatus,
+        previewId: state.preview.previewId,
+    }
+}
+
+const dispatchStateToProps = dispatch => {
+    return {
+        changePreviewPlayStatus: (playStatus ,beatmapsetId) => dispatch(changePreviewPlayStatus(playStatus, beatmapsetId)),
+    }
+}
+
+export default connect(mapStateToProps, dispatchStateToProps)(Map)

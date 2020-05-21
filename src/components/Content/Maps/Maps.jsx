@@ -6,6 +6,9 @@ export default class Search extends Component {
     constructor(props) {
         super(props);
         this.scroll = this.scroll.bind(this);
+
+        this.audioApi = new Audio();
+        this.audioApi.preload = 'auto'
     }
 
     scroll(e) {
@@ -21,7 +24,11 @@ export default class Search extends Component {
         return (
             <div className="content-maps" onScroll={this.scroll}>
                 {this.props.mapsets.map(m => {
-                    return <Map mapset={m} key={"mapset-" + m.id} />
+                    return <Map 
+                                mapset={m}
+                                key={"mapset-" + m.id}
+                                audioApi={this.audioApi}
+                            />
                 })}
             </div>
         )
