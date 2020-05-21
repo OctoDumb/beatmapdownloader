@@ -12,12 +12,10 @@ class Map extends Component {
     playPreview() {
         this.props.audioApi.src = this.props.mapset.preview;
         this.props.audioApi.play();
-        this.setState({ previewIsPlayed: true });
     }
 
     pausePreview() {
         this.props.audioApi.pause();
-        this.setState({ previewIsPlayed: false });
     }
 
     getIconBubble() {
@@ -41,24 +39,28 @@ class Map extends Component {
         let { mapset, playStatus, previewId } = this.props;
 
         if (playStatus && previewId === this.props.mapset.id ) {
-            return <FontAwesomeIcon 
-                        className="map-header__playBtn" 
-                        icon="pause"
-                        onClick={() => {
-                            this.pausePreview();
-                            this.props.changePreviewPlayStatus(false, mapset.id);
-                        }}
-                    />
-        }
-
-        return <FontAwesomeIcon 
+            return (
+                <FontAwesomeIcon 
                     className="map-header__playBtn" 
-                    icon="play"
+                    icon="pause"
                     onClick={() => {
-                        this.playPreview();
-                        this.props.changePreviewPlayStatus(true, mapset.id);
+                        this.pausePreview();
+                        this.props.changePreviewPlayStatus(false, mapset.id);
                     }}
                 />
+            )
+        }
+
+        return (
+            <FontAwesomeIcon 
+                className="map-header__playBtn" 
+                icon="play"
+                onClick={() => {
+                    this.playPreview();
+                    this.props.changePreviewPlayStatus(true, mapset.id);
+                }}
+            />
+        ) 
     }
 
     download() {
