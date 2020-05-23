@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import WindowControlButtons from './WindowControlButtons/WindowControlButtons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import Settings from '../Settings/Settings';
 import './WindowControl.scss';
 
@@ -21,7 +21,7 @@ export default class WindowControl extends Component {
     render() {
         return (
             <div className="window-control">
-                {this.state.settingsShowed && ReactDOM.createPortal(<Settings closeSettings={this.closeSettings.bind(this)} />, document.getElementById('content'))}
+                {this.state.settingsShowed && createPortal(<Settings closeSettings={this.closeSettings.bind(this)} />, document.getElementById('content'))}
                 <FontAwesomeIcon
                     className="window-control__settingsBtn"
                     icon="cog"

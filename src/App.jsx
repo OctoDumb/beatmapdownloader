@@ -22,7 +22,9 @@ import {
   faCog, 
   faCheck, 
   faPlay,
-  faPause
+  faPlayCircle,
+  faPause,
+  faHeart
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -36,7 +38,9 @@ library.add(
   faCog, 
   faCheck, 
   faPlay,
-  faPause
+  faPlayCircle,
+  faPause,
+  faHeart
 );
 
 export default class App extends Component {

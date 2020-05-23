@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
+import { createPortal } from 'react-dom';
 import MapIcon from './MapIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux';
 import { changePreviewPlayStatus } from '../../../redux/actions/previewAction'
+import MapAdditionalInformation from './MapAdditionalInformation/MapAdditionalInformation';
+
 
 class Map extends Component {
     state = {
         progress: 0,
+        additionalInformationShowed: false
     };
+
+    showAdditionalInformation() {
+        this.setState({ additionalInformationShowed: true })
+    }
+
+    closeAdditionalInformation() {
+        this.setState({ additionalInformationShowed: false })
+    }
 
     playPreview() {
         this.props.audioApi.src = this.props.mapset.preview;
@@ -102,10 +114,12 @@ class Map extends Component {
 
         return (
             <div className="map">
+                {this.state.additionalInformationShowed && createPortal(<MapAdditionalInformation mapset={mapset} closeAdditionalInformation={this.closeAdditionalInformation.bind(this)} />, document.getElementById('content'))}
                 <div className="progress" style={{ width: `${this.state.progress}%` }}>
                     {this.state.progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />} 
                 </div>
                 <div className="map-header"
+                    onClick={() => this.showAdditionalInformation()}
                     style={{
                         background: `url("${mapset.covers.cover2x}")`,
                         backgroundSize: "cover",

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Settings.scss'
-import { Link } from 'react-router-dom';
 
 export default class Settings extends Component {
     state = {
