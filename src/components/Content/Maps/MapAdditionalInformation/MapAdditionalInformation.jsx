@@ -5,25 +5,20 @@ import MapIcon from '../MapIcon';
 
 export default class MapAdditionalInformation extends Component {
     state = {
-        mapperAvatar: undefined
+        beatmapId: this.props.mapset.beatmaps[0].id
     }
 
-    async componentDidMount() {
-        this.setState({
-            mapperAvatar: await this.getUserAvatar(this.props.mapset.creator.id)
-        })
-    }
-
-    async getUserAvatar(uId) {
-        let { avatar_url } = await window.APIClient.request(`users/${uId}`);
-        return avatar_url
+    getBeatmapId(beatmapId) {
+        this.setState({ beatmapId })
     }
 
     render() {
         let { mapset } = this.props;
+        let beatmap = mapset.beatmaps.filter(b => b.id === this.state.beatmapId)[0]
+        console.log(beatmap)
 
         return (
-            <div className="additional-information">
+            <div className="additional-information" id="additionalInformation">
                 <FontAwesomeIcon 
                     className="additional-information__closeBtn" 
                     icon="times"
@@ -40,14 +35,17 @@ export default class MapAdditionalInformation extends Component {
                     >
                         <div className="additional-information-content__header--main">
                             <div className="additional-information-content__diffs">
-                                <MapIcon maps={mapset.beatmaps || []} />
+                                <MapIcon 
+                                    maps={mapset.beatmaps || []}
+                                    getBeatmapId={this.getBeatmapId.bind(this)}
+                                />
                             </div>
-                            <span className="additional-information-content__diffName">Hard</span>
-                            <div className="additional-information-content__worldStats" >
+                            <span className="additional-information-content__diffName">{beatmap.version}</span>
+                            <div className="additional-information-content__worldStats">
                                 <FontAwesomeIcon icon="play-circle"/>
                                 <span>{mapset.playcount}</span> 
                             </div>
-                            <div className="additional-information-content__worldStats" >
+                            <div className="additional-information-content__worldStats">
                                 <FontAwesomeIcon icon="heart"/>
                                 <span>{mapset.favourites}</span> 
                             </div>
@@ -56,7 +54,7 @@ export default class MapAdditionalInformation extends Component {
                             <div className="additional-information-content-mapping">
                                 <img 
                                     className="additional-information-content-mapping__avatar"
-                                    src={this.state.mapperAvatar || "https://osu.ppy.sh/images/layout/avatar-guest.png"}
+                                    src={`http://s.ppy.sh/a/${mapset.creator.id}` || "https://osu.ppy.sh/images/layout/avatar-guest.png"}
                                     alt=""
                                 ></img>
                                 <div className="additional-information-content-mapping__information">
@@ -70,6 +68,11 @@ export default class MapAdditionalInformation extends Component {
                             <div className="additional-information-content__status">{mapset.status}</div>
                             <div className="additional-information-stats">
                                 <div className="additional-information-stats__container">
+                                    <div className="additional-information-stats__row additional-information-stats__previewBtn">
+                                        {this.props.getPreviewBtn()}
+                                    </div>
+                                </div>
+                                <div className="additional-information-stats__container">
                                     <div className="additional-information-stats__row">
                                         <div className="beatmap-basic-stats">
                                             <div className="beatmap-basic-stats__item">
@@ -78,7 +81,7 @@ export default class MapAdditionalInformation extends Component {
                                                     src="https://osu.ppy.sh/images/layout/beatmapset-page/total_length.svg"
                                                     alt=""
                                                 />
-                                                <span>5:21</span>
+                                                <span>{`${Math.floor(beatmap.length / 60)}:${(beatmap.length - 60 * Math.floor(beatmap.length / 60)).toString().padStart(2, "0")}`}</span>
                                             </div>
                                             <div className="beatmap-basic-stats__item">
                                                 <img 
@@ -86,7 +89,7 @@ export default class MapAdditionalInformation extends Component {
                                                     src="https://osu.ppy.sh/images/layout/beatmapset-page/bpm.svg"
                                                     alt=""
                                                 />
-                                                <span>180</span>
+                                                <span>{beatmap.bpm}</span>
                                             </div>
                                             <div className="beatmap-basic-stats__item">
                                                 <img 
@@ -94,7 +97,7 @@ export default class MapAdditionalInformation extends Component {
                                                     src="https://osu.ppy.sh/images/layout/beatmapset-page/count_circles.svg"
                                                     alt=""
                                                 />
-                                                <span>464</span>
+                                                <span>{beatmap.countCircles}</span>
                                             </div>
                                             <div className="beatmap-basic-stats__item">
                                                 <img 
@@ -102,7 +105,7 @@ export default class MapAdditionalInformation extends Component {
                                                     src="https://osu.ppy.sh/images/layout/beatmapset-page/count_sliders.svg"
                                                     alt=""
                                                 />
-                                                <span>502</span>
+                                                <span>{beatmap.countSliders}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -111,37 +114,52 @@ export default class MapAdditionalInformation extends Component {
                                     <div className="additional-information-stats__row">
                                         <span className="beatmap-stats__label">Circle Size</span>
                                         <div className="beatmap-stats__bar">
-                                            <div className="beatmap-stats__bar--inner"></div>
+                                            <div 
+                                                className="beatmap-stats__bar--inner"
+                                                style={{ width: `${(beatmap.stats.cs / 10).toFixed(2) * 100}%` }}
+                                            ></div>
                                         </div>
-                                        <span className="beatmap-stats__value">4</span>
+                                        <span className="beatmap-stats__value">{beatmap.stats.cs}</span>
                                     </div>
                                     <div className="additional-information-stats__row">
                                         <span className="beatmap-stats__label">HP Drain</span>
                                         <div className="beatmap-stats__bar">
-                                            <div className="beatmap-stats__bar--inner"></div>
+                                            <div 
+                                                className="beatmap-stats__bar--inner"
+                                                style={{ width: `${(beatmap.stats.hp / 10).toFixed(2) * 100}%` }}
+                                            ></div>
                                         </div>
-                                        <span className="beatmap-stats__value">4</span>
+                                        <span className="beatmap-stats__value">{beatmap.stats.hp}</span>
                                     </div>
                                     <div className="additional-information-stats__row">
                                         <span className="beatmap-stats__label">Accuracy</span>
                                         <div className="beatmap-stats__bar">
-                                            <div className="beatmap-stats__bar--inner"></div>
+                                            <div 
+                                                className="beatmap-stats__bar--inner"
+                                                style={{ width: `${(beatmap.stats.od / 11).toFixed(2) * 100}%` }}
+                                            ></div>
                                         </div>
-                                        <span className="beatmap-stats__value">8.5</span>
+                                        <span className="beatmap-stats__value">{beatmap.stats.od}</span>
                                     </div>
                                     <div className="additional-information-stats__row">
                                         <span className="beatmap-stats__label">Approach Rate</span>
                                         <div className="beatmap-stats__bar">
-                                            <div className="beatmap-stats__bar--inner"></div>
+                                            <div 
+                                                className="beatmap-stats__bar--inner"
+                                                style={{ width: `${(beatmap.stats.ar / 10).toFixed(2) * 100}%` }}
+                                            ></div>
                                         </div>
-                                        <span className="beatmap-stats__value">9.3</span>
+                                        <span className="beatmap-stats__value">{beatmap.stats.ar}</span>
                                     </div>
                                     <div className="additional-information-stats__row">
                                         <span className="beatmap-stats__label">Star Difficulty</span>
                                         <div className="beatmap-stats__bar">
-                                            <div className="beatmap-stats__bar--inner"></div>
+                                            <div 
+                                                className="beatmap-stats__bar--inner"
+                                                style={{ width: `${(beatmap.stars / 10).toFixed(2) * 100}%` }}
+                                            ></div>
                                         </div>
-                                        <span className="beatmap-stats__value">5.83</span>
+                                        <span className="beatmap-stats__value">{beatmap.stars}</span>
                                     </div>
                                 </div>
                             </div>

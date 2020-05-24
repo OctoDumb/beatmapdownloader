@@ -15,6 +15,10 @@ export default class Beatmap {
 
         this.bpm = data.bpm;
 
+        this.countCircles = data.count_circles;
+
+        this.countSliders = data.count_sliders;
+
         this.version = data.version;
 
         this.stars = data.difficulty_rating;

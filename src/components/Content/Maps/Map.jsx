@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
 import MapIcon from './MapIcon';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { changePreviewPlayStatus } from '../../../redux/actions/previewAction'
+import { changePreviewPlayStatus } from '../../../redux/actions/previewAction';
 import MapAdditionalInformation from './MapAdditionalInformation/MapAdditionalInformation';
 
 
@@ -13,7 +13,7 @@ class Map extends Component {
         additionalInformationShowed: false
     };
 
-    showAdditionalInformation() {
+    showAdditionalInformation(e) {
         this.setState({ additionalInformationShowed: true })
     }
 
@@ -50,7 +50,7 @@ class Map extends Component {
     getPreviewBtn() {
         let { mapset, playStatus, previewId } = this.props;
 
-        if (playStatus && previewId === this.props.mapset.id ) {
+        if (playStatus && previewId === mapset.id ) {
             return (
                 <FontAwesomeIcon 
                     className="map-header__playBtn" 
@@ -114,10 +114,18 @@ class Map extends Component {
 
         return (
             <div className="map">
-                {this.state.additionalInformationShowed && createPortal(<MapAdditionalInformation mapset={mapset} closeAdditionalInformation={this.closeAdditionalInformation.bind(this)} />, document.getElementById('content'))}
+                {this.state.additionalInformationShowed && createPortal(
+                    <MapAdditionalInformation 
+                        mapset={mapset} 
+                        closeAdditionalInformation={this.closeAdditionalInformation.bind(this)}
+                        getPreviewBtn={this.getPreviewBtn.bind(this)}
+                    />, 
+                    document.getElementById('content')
+                )}
                 <div className="progress" style={{ width: `${this.state.progress}%` }}>
                     {this.state.progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />} 
                 </div>
+                {this.getPreviewBtn()}
                 <div className="map-header"
                     onClick={() => this.showAdditionalInformation()}
                     style={{
@@ -130,7 +138,6 @@ class Map extends Component {
                         {this.getIconBubble()}
                         <span className="map-header__status">{mapset.status}</span>
                     </div>
-                    {this.getPreviewBtn()}
                     <div className="map-header-information">
                         <span className="map-header-information__title">{mapset.title}</span>
                         <span className="map-header-information__artist">{mapset.artist}</span>
@@ -146,7 +153,7 @@ class Map extends Component {
                             onClick={() => this.download()}
                         />
                     </div>
-                    <MapIcon maps={mapset.beatmaps || []} />
+                    <MapIcon mini maps={mapset.beatmaps || []} />
                 </div>
             </div>
         )
