@@ -9,13 +9,12 @@ export default class MapAdditionalInformation extends Component {
     }
 
     getBeatmapId(beatmapId) {
-        this.setState({ beatmapId })
+        this.setState({ beatmapId });
     }
 
     render() {
         let { mapset } = this.props;
-        let beatmap = mapset.beatmaps.filter(b => b.id === this.state.beatmapId)[0]
-        console.log(beatmap)
+        let beatmap = mapset.beatmaps.filter(b => b.id === this.state.beatmapId)[0];
 
         return (
             <div className="additional-information" id="additionalInformation">

@@ -54,7 +54,7 @@ export default function MapIcon(props) {
             case 1:
                 return (
                     <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0 ? true : false} />
+                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
                         <div>
                             <Taiko {...props} />
                         </div>
@@ -64,7 +64,7 @@ export default function MapIcon(props) {
             case 2:
                 return (
                     <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0 ? true : false} />
+                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
                         <div>
                             <Fruits {...props} />
                         </div>
@@ -74,7 +74,7 @@ export default function MapIcon(props) {
             case 3:
                 return (
                     <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0 ? true : false} />
+                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
                         <div>
                             <Mania {...props} />
                         </div>
@@ -84,7 +84,7 @@ export default function MapIcon(props) {
             default:
                 return (
                     <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0 ? true : false} />
+                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
                         <div>
                             <Osu {...props} />
                         </div>
@@ -117,6 +117,35 @@ export default function MapIcon(props) {
         ) : null);
     }
 
+    function renderIcons() {
+        return props.maps.map((m, i) => {
+            return (
+                <div
+                    key={"map-" + m.id}
+                    onClick={() => {
+                        if (!props.mini)
+                            props.getBeatmapId(m.id)
+                    }}
+                    style={{
+                        width: props.mini ? "auto" :'38px',
+                        height: props.mini ? "auto" :'38px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Tippy
+                        singleton={target}
+                        content={getDifficultyTooltip(m)}
+                    >
+                        {props.mini ? getMiniDifficultyIcon(m): getDifficultyIcon(m, i)}
+                    </Tippy>
+                </div>
+                
+            )
+        })
+    }
+
     return (
         <div className="icons">
             <Tippy 
@@ -125,30 +154,7 @@ export default function MapIcon(props) {
                 moveTransition='transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
                 placement="bottom"
             />
-            {props.maps.length <= 12 ? props.maps.map((m, i) => {
-                return (
-                    <div
-                        key={"map-" + m.id}
-                        onClick={() => {
-                            if (!props.mini)
-                                props.getBeatmapId(m.id)
-                        }}
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <Tippy
-                            singleton={target}
-                            content={getDifficultyTooltip(m)}
-                        >
-                            {props.mini ? getMiniDifficultyIcon(m): getDifficultyIcon(m, i)}
-                        </Tippy>
-                    </div>
-                    
-                )
-            }) : getShorten()}
+            {props.maps.length <= 12 || !props.mini ? renderIcons() : getShorten()}
         </div>
     )
 }
