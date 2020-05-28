@@ -6,7 +6,8 @@ import './Maps.scss';
 
 class Maps extends Component {
     state = {
-        showInfo: false
+        showInfo: false,
+        progresses: {}
     };
 
     constructor(props) {
@@ -17,6 +18,26 @@ class Maps extends Component {
     }
 
     componentDidMount() {
+        window.Downloader.on('progress', data => {
+            this.setState({
+                progresses: {
+                    ...this.state.progresses,
+                    [data.id]: data.progress
+                }
+            });
+        });
+
+        window.Downloader.on('done', data => {
+            setTimeout(() => {
+                this.setState({
+                    progresses: {
+                        ...this.state.progresses,
+                        [data.id]: 0
+                    }
+                });
+            }, 5e3);
+        });
+
         this.audioApi.addEventListener('ended', () => {
             this.props.changePreviewPlayStatus(false);
         })
@@ -48,6 +69,7 @@ class Maps extends Component {
                             key={"mapset-" + m.id}
                             audioApi={this.audioApi}
                             setShowInfo={(v) => this.setShowInfo(v)}
+                            progress={this.state.progresses[m.id] || 0}
                         />
                     ) 
                 })}

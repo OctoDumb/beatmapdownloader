@@ -109,19 +109,6 @@ class Map extends Component {
             });
         }
     }
-
-    componentDidMount() {
-        let { id } = this.props.mapset;
-        window.Downloader.on('progress', data => {
-            if(data.id === id)
-                this.setState({ progress: data.progress });
-        });
-
-        window.Downloader.on('done', data => {
-            if(data.id === id)
-                setTimeout(() => this.setState({ progress: 0 }), 5e3);
-        });
-    }
     
     render() {
         let { mapset } = this.props;
@@ -136,8 +123,8 @@ class Map extends Component {
                     />, 
                     document.getElementById('content')
                 )}
-                <div className="progress" style={{ width: `${this.state.progress}%` }}>
-                    {this.state.progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />} 
+                <div className="progress" style={{ width: `${this.props.progress}%` }}>
+                    {this.props.progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />} 
                 </div>
                 {this.getPreviewBtn()}
                 <div className="map-header"
