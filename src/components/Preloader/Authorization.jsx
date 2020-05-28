@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+import { addUserFriends, addUserId } from '../../redux/actions/userInformationReducer';
 import './Preloader.scss';
 
-export default class Authorization extends Component {
+class Authorization extends Component {
     state = {};
 
     componentDidMount() {
@@ -18,8 +20,13 @@ export default class Authorization extends Component {
             window.localStorage.removeItem('password');
         }
 
-        let { avatar_url } = await window.APIClient.request('/me');
+        let { avatar_url, id } = await window.APIClient.request('/me');
         window.localStorage.setItem('avatar', avatar_url);
+
+        let friends = (await window.APIClient.request('/friends')).map(f => f.id);
+
+        this.props.addUserId(id);
+        this.props.addUserFriends(friends);
 
         if(loggedIn) {
             this.setState({ redirect: "app" });
@@ -60,3 +67,16 @@ export default class Authorization extends Component {
         }
     }
 }
+
+const mapStateToProps = state => {
+    return {}
+}
+
+const dispatchStateToProps = dispatch => {
+    return {
+        addUserId: userId => dispatch(addUserId(userId)),
+        addUserFriends: friends => dispatch(addUserFriends(friends)),
+    }
+}
+
+export default connect(mapStateToProps, dispatchStateToProps)(Authorization)

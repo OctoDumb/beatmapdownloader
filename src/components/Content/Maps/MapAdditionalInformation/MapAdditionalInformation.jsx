@@ -2,36 +2,66 @@ import React, { Component } from 'react';
 import './MapAdditionalInformation.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MapIcon from '../MapIcon';
+import Leaderboard from './Leaderboard/Leaderboard';
 
 export default class MapAdditionalInformation extends Component {
     state = {
-        beatmapId: this.props.mapset.beatmaps[0].id
+        beatmapId: this.props.mapset.beatmaps[0].id,
+        leaderboards: {}
+    };
+
+    componentDidMount() {
+        this.getBeatmapId(this.props.mapset.beatmaps[0].id);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === "Escape")
+                this.props.close();
+        });
     }
 
     getBeatmapId(beatmapId) {
         this.setState({ beatmapId });
+        if(!this.state.leaderboards[beatmapId]) {
+            if(this.state.leaderboards[beatmapId] === null) return;
+            this.setState({
+                leaderboards: {
+                    ...this.state.leaderboards,
+                    [beatmapId]: null
+                }
+            });
+            window.APIClient.request(`/beatmaps/${beatmapId}/scores`).then(r => {
+                this.setState({
+                    leaderboards: {
+                        ...this.state.leaderboards,
+                        [beatmapId]: r
+                    }
+                });
+            });
+        }
     }
 
     render() {
         let { mapset } = this.props;
-        let beatmap = mapset.beatmaps.filter(b => b.id === this.state.beatmapId)[0];
+        let beatmap = mapset.beatmaps.find(b => b.id === this.state.beatmapId);
 
         return (
-            <div className="additional-information" id="additionalInformation">
-                <FontAwesomeIcon 
-                    className="additional-information__closeBtn" 
-                    icon="times"
-                    onClick={() => this.props.closeAdditionalInformation()}
-                />
+            <div 
+                className="additional-information"
+                id="additionalInformation"
+                onClick={this.props.close}
+            >
                 <div className="additional-information-content">
                     <div 
                         className="additional-information-content__header"
-                        style={{
-                            background: `url("${mapset.covers.cover2x}")`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center center",
-                        }}
                     >
+                        <div
+                            className="additional-information-content__header--background"
+                            style={{
+                                background: `url("${mapset.covers.cover2x}")`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center center",
+                            }}
+                        />
                         <div className="additional-information-content__header--main">
                             <div className="additional-information-content__diffs">
                                 <MapIcon 
@@ -55,11 +85,11 @@ export default class MapAdditionalInformation extends Component {
                                     className="additional-information-content-mapping__avatar"
                                     src={`http://s.ppy.sh/a/${mapset.creator.id}` || "https://osu.ppy.sh/images/layout/avatar-guest.png"}
                                     alt=""
-                                ></img>
+                                />
                                 <div className="additional-information-content-mapping__information">
-                                    <span className="additional-information-content-mapping__text">{`mapped by ${mapset.creator.nickname}`}</span>
-                                    <span className="additional-information-content-mapping__text">{`submitted`}</span>
-                                    <span className="additional-information-content-mapping__text">{`ranked`}</span>
+                                    <span className="additional-information-content-mapping__text">mapped by {mapset.creator.nickname}</span>
+                                    <span className="additional-information-content-mapping__text">submitted</span>
+                                    <span className="additional-information-content-mapping__text">ranked</span>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +145,7 @@ export default class MapAdditionalInformation extends Component {
                                         <div className="beatmap-stats__bar">
                                             <div 
                                                 className="beatmap-stats__bar--inner"
-                                                style={{ width: `${(beatmap.stats.cs / 10).toFixed(2) * 100}%` }}
+                                                style={{ width: `${beatmap.stats.cs * 10}%` }}
                                             ></div>
                                         </div>
                                         <span className="beatmap-stats__value">{beatmap.stats.cs}</span>
@@ -125,7 +155,7 @@ export default class MapAdditionalInformation extends Component {
                                         <div className="beatmap-stats__bar">
                                             <div 
                                                 className="beatmap-stats__bar--inner"
-                                                style={{ width: `${(beatmap.stats.hp / 10).toFixed(2) * 100}%` }}
+                                                style={{ width: `${beatmap.stats.hp * 10}%` }}
                                             ></div>
                                         </div>
                                         <span className="beatmap-stats__value">{beatmap.stats.hp}</span>
@@ -135,7 +165,7 @@ export default class MapAdditionalInformation extends Component {
                                         <div className="beatmap-stats__bar">
                                             <div 
                                                 className="beatmap-stats__bar--inner"
-                                                style={{ width: `${(beatmap.stats.od / 11).toFixed(2) * 100}%` }}
+                                                style={{ width: `${beatmap.stats.od / 11 * 100}%` }}
                                             ></div>
                                         </div>
                                         <span className="beatmap-stats__value">{beatmap.stats.od}</span>
@@ -145,7 +175,7 @@ export default class MapAdditionalInformation extends Component {
                                         <div className="beatmap-stats__bar">
                                             <div 
                                                 className="beatmap-stats__bar--inner"
-                                                style={{ width: `${(beatmap.stats.ar / 10).toFixed(2) * 100}%` }}
+                                                style={{ width: `${beatmap.stats.ar * 10}%` }}
                                             ></div>
                                         </div>
                                         <span className="beatmap-stats__value">{beatmap.stats.ar}</span>
@@ -155,7 +185,7 @@ export default class MapAdditionalInformation extends Component {
                                         <div className="beatmap-stats__bar">
                                             <div 
                                                 className="beatmap-stats__bar--inner"
-                                                style={{ width: `${(beatmap.stars / 10).toFixed(2) * 100}%` }}
+                                                style={{ width: `${Math.min(beatmap.stars, 10) * 10}%` }}
                                             ></div>
                                         </div>
                                         <span className="beatmap-stats__value">{beatmap.stars}</span>
@@ -163,6 +193,9 @@ export default class MapAdditionalInformation extends Component {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="additional-information-content__body">
+                        <Leaderboard {...this.state.leaderboards[beatmap.id]} />
                     </div>
                 </div>
             </div>

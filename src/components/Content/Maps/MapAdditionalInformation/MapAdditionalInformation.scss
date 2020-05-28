@@ -9,13 +9,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: $color2;
+    background: rgba($color2, .9);
     animation: informationPanel;
     animation-duration: .7s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
     z-index: 100;
+    &--faded {
+        animation: informationPanelFaded;
+        animation-duration: .7s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
     &__closeBtn {
+        display: none;
         position: absolute;
         top: 30px;
         right: 30px;
@@ -27,14 +34,20 @@
         &:hover {
             color: darken(white, 20%);
         }
+        @media screen and (max-width: 1000px) {
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
     }
 }
 
 .additional-information-content {
     width: 1000px;
-    min-height: 100%;
+    height: 100%;
     margin: 0 auto;
-    background: $color3;
+    background: $color6;
+    overflow-y: scroll;
     @media screen and (max-width: 1000px) {
         width: 100%;
         margin: 0;
@@ -46,6 +59,14 @@
         min-height: 330px;
         display: flex;
         justify-content: space-between;
+        overflow: hidden;
+        &--background {
+            filter: blur(1px);
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
         &::after {
             content: '';
             width: 100%;
@@ -74,6 +95,11 @@
                 width: 35%;
             }
         }
+    }
+    &__body {
+        width: 100%;
+        min-height: 400px;
+        padding: 50px 45px;
     }
     &__diffs {
         position: relative;
@@ -241,7 +267,7 @@
         justify-content: center;
         align-items: center;
         * {
-            display: block !important;
+            opacity: 1 !important;
             position: static !important; 
         }
     }
@@ -286,9 +312,11 @@
         z-index: 3;
         align-self: flex-end;
         margin-bottom: 2px;
+        transition: .3s ease;
         &--inner {
             height: 100%;
             background: white;
+            transition: .3s ease;
             z-index: 4;
         }
     }
@@ -304,4 +332,9 @@
 @keyframes informationPanel {
     from {top: 100%}
     to {top: 30px}
+}
+
+@keyframes informationPanelFaded {
+    from {top: 30px}
+    to {top: 100%}
 }

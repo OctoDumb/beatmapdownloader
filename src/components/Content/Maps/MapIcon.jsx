@@ -48,55 +48,20 @@ export default function MapIcon(props) {
     }
 
     function getDifficultyIcon(diff, i) {
-        let props = { title: "", className: getDifficultyColor(diff.stars), style: {width: '20px', height: '20px'} };
-
-        switch(diff.mode) {
-            case 1:
-                return (
-                    <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
-                        <div>
-                            <Taiko {...props} />
-                        </div>
-                    </label>
-                )
-
-            case 2:
-                return (
-                    <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
-                        <div>
-                            <Fruits {...props} />
-                        </div>
-                    </label>
-                )
-
-            case 3:
-                return (
-                    <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
-                        <div>
-                            <Mania {...props} />
-                        </div>
-                    </label>
-                )
-
-            default:
-                return (
-                    <label>
-                        <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
-                        <div>
-                            <Osu {...props} />
-                        </div>
-                    </label>
-                )
-        }
+        return (
+            <label>
+                <input type="radio" name="diffIcon" style={{ display: 'none' }} defaultChecked={i === 0} />
+                <div>
+                    {getMiniDifficultyIcon(diff)}
+                </div>
+            </label>
+        );
     }
 
     const [source, target] = useSingleton();
 
     function getShorten() {
-        let hardest = [].fill(null, 0, 3);
+        let hardest = new Array(4).fill(0);
         for(let map of props.maps) {
             if(!hardest[map.mode])
                 hardest[map.mode] = map;

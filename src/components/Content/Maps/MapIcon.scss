@@ -7,9 +7,11 @@
     display: flex;
     align-items: center;
     z-index: 4;
+    div {
+        margin-right: 4px;
+    }
     *{
         outline: none;
-        margin-right: 4px;
         &:focus {
             outline: none;
         }

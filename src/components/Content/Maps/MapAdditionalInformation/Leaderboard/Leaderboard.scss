@@ -1,0 +1,214 @@
+@import '../../../../../Vars.scss';
+
+.leaderboard-top {
+    width: 100%;
+    &-item {
+        position: relative;
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        border-radius: 4px;
+        background: #2E3538;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        &__position {
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+        }
+        &__worldRank {
+            color: white;
+        }
+        &__gradeIcon, &__flag {
+            width: 19px;
+            height: 13px;
+        }
+        &__playerAvatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        &__userBox {
+            display: flex;
+            flex-direction: column;
+        }
+        &__nickname {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: block;
+            margin-right: 10px;
+            color: #fff;
+        }
+        &__achieved {
+            font-size: 10px;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+        &-stats {
+            position: absolute;
+            right: 0;
+            margin-right: 10px;
+            min-width: 440px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            &__top, &__bottom {
+                width: 100%;
+                height: 50%;
+                display: flex;
+                justify-content: flex-end;
+            }
+            &__topItem {
+                min-width: 90px;
+                max-width: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-right: 15px;
+                &--title {
+                    text-transform: uppercase;
+                    color: #777;
+                    margin-left: 2px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    border-bottom: 1px solid darken($color4, 5%);
+                }
+                &--value {
+                    padding-top: 2px;
+                    margin-left: 2px;
+                    font-size: 18px;
+                    font-weight: 200;
+                    color: #fff;
+                    line-height: .9;
+                }
+            }
+            &__bottomItem {
+                min-width: 44px;
+                max-width: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-right: 10px;
+                &--title {
+                    text-transform: uppercase;
+                    color: #777;
+                    margin-left: 2px;
+                    font-size: 12px;
+                    border-bottom: 1px solid darken($color4, 5%);
+                }
+                &--value {
+                    height: 16px;
+                    padding-top: 2px;
+                    margin-left: 2px;
+                    font-size: 16px;
+                    font-weight: 300;
+                    color: #fff;
+                    line-height: .9;
+                }
+            }
+        }
+    }
+}
+
+.leaderboard-bottom {
+    .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+        thead, tbody {
+            width: 100%;
+        }
+        td {
+            vertical-align: middle;
+        }
+        tr {
+            padding: 2px 0;
+        }
+        &__header {
+            text-transform: uppercase;
+            color: #777;
+            font-size: 10px;
+        }
+        &__body {
+            font-size: 10px;
+            color: white;
+            tr {
+                border-radius: 5px;
+                td {
+                    font-weight: 200;
+                    border: none;
+                    &:first-child {
+                        border-top-left-radius: 5px;
+                        border-bottom-left-radius: 5px;
+                    }
+                    &:last-child {
+                        border-top-right-radius: 5px;
+                        border-bottom-right-radius: 5px;
+                    }
+                }
+                &:nth-child(2n+1) {
+                    background: #2E3538;
+                }
+                &:hover {
+                    background: #394246;
+                    .leaderboard-table--perfect {
+                        color: #efc;
+                    }
+                }
+            }
+            &--friend {
+                background: rgba(238,170,0,.2) !important;
+            }
+            &--me {
+                background: rgba(102,136,0,.3) !important;
+            }
+        }
+        &--rank {
+            width: 30px;
+            text-align: right;
+        }
+        &--grade {
+            width: 30px;
+            text-align: center;
+        }
+        &--score {
+            width: 65px;
+        }
+        &--accuracy {
+            width: 60px;
+        }
+        &--perfect {
+            color: #88b300;
+        }
+        &--flag {
+            width: 25px;
+        }
+        &--player {
+            width: 140px;
+        }
+        &--combo {
+            width: 60px;
+        }
+        &--hitStat {
+            width: 35px;
+            text-align: center;
+        }
+        &--pp {
+            width: 30px;
+            text-align: center;
+        }
+        &--mods {
+            width: 1%;
+        }
+    }
+    .leaderboard-mods {
+        width: auto;
+        display: flex;
+        align-items: center;
+        img {
+            margin-right: 2px;
+        }
+    }
+}

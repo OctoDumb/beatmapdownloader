@@ -7,14 +7,10 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: 'Torus';
-}
-
-.toast {
-    font-family: 'Torus';
 }
 
 * {
+    font-family: 'Torus' !important;
     box-sizing: border-box;
 }
 
@@ -24,5 +20,35 @@ input {
 
 .swal2-popup {
     background: lighten(#19191A, 5%) !important;
-    font-family: 'Torus' !important;
+}
+
+::-webkit-scrollbar-button {
+    background-image:url('');
+    background-repeat:no-repeat;
+    width:6px;
+    height:0px
+}
+
+::-webkit-scrollbar-track {
+    position: relative;
+    background-color: $color2;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    position: relative;
+    left: 0;
+    border-radius: 5px;
+    background-color: $color5;
+}
+
+::-webkit-resizer{
+    background-image:url('');
+    background-repeat:no-repeat;
+    width:7px;
+    height:0px
+}
+
+::-webkit-scrollbar{
+    width: 11px;
 }

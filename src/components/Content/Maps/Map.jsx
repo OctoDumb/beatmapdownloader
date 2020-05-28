@@ -13,12 +13,30 @@ class Map extends Component {
         additionalInformationShowed: false
     };
 
-    showAdditionalInformation(e) {
-        this.setState({ additionalInformationShowed: true })
+    showAdditionalInformation() {
+        setTimeout(() => {
+            document.getElementById('contentMaps').style.filter = "blur(4px)"
+            document.getElementById('header').style.filter = "blur(4px)"
+        }, 700);
+        this.props.setShowInfo(true);
+        this.setState({ additionalInformationShowed: true });
     }
 
-    closeAdditionalInformation() {
-        this.setState({ additionalInformationShowed: false })
+    close(e) {
+        if (!e || e.currentTarget === e.target) {
+            this.props.setShowInfo(false);
+
+            let additionalInformation = document.getElementById('additionalInformation');
+            additionalInformation.classList.add('additional-information--faded');
+
+            document.getElementById('contentMaps').style.filter = "blur(0px)"
+            document.getElementById('header').style.filter = "blur(0px)"
+            
+            setTimeout(() => {
+                additionalInformation.classList.remove('additional-information--faded');
+                this.setState({ additionalInformationShowed: false });
+            }, 700);
+        }
     }
 
     playPreview() {
@@ -103,10 +121,6 @@ class Map extends Component {
             if(data.id === id)
                 setTimeout(() => this.setState({ progress: 0 }), 5e3);
         });
-
-        this.props.audioApi.addEventListener('ended', () => {
-            this.props.changePreviewPlayStatus(false);
-        })
     }
     
     render() {
@@ -116,8 +130,8 @@ class Map extends Component {
             <div className="map">
                 {this.state.additionalInformationShowed && createPortal(
                     <MapAdditionalInformation 
-                        mapset={mapset} 
-                        closeAdditionalInformation={this.closeAdditionalInformation.bind(this)}
+                        mapset={mapset}
+                        close={this.close.bind(this)}
                         getPreviewBtn={this.getPreviewBtn.bind(this)}
                     />, 
                     document.getElementById('content')
