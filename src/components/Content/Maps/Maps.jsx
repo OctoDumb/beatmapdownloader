@@ -4,40 +4,19 @@ import { connect } from 'react-redux';
 import { changePreviewPlayStatus } from '../../../redux/actions/previewAction';
 import './Maps.scss';
 
-class Maps extends Component {
-    state = {
-        showInfo: false,
-        progresses: {}
-    };
+class Maps extends Component {   
 
     constructor(props) {
         super(props);
 
         this.audioApi = new Audio();
         this.audioApi.preload = 'auto';
+        this.state = {
+            showInfo: false
+        };
     }
 
     componentDidMount() {
-        window.Downloader.on('progress', data => {
-            this.setState({
-                progresses: {
-                    ...this.state.progresses,
-                    [data.id]: data.progress
-                }
-            });
-        });
-
-        window.Downloader.on('done', data => {
-            setTimeout(() => {
-                this.setState({
-                    progresses: {
-                        ...this.state.progresses,
-                        [data.id]: 0
-                    }
-                });
-            }, 5e3);
-        });
-
         this.audioApi.addEventListener('ended', () => {
             this.props.changePreviewPlayStatus(false);
         })
@@ -69,7 +48,6 @@ class Maps extends Component {
                             key={"mapset-" + m.id}
                             audioApi={this.audioApi}
                             setShowInfo={(v) => this.setShowInfo(v)}
-                            progress={this.state.progresses[m.id] || 0}
                         />
                     ) 
                 })}
@@ -77,15 +55,10 @@ class Maps extends Component {
         )
     }
 }
-
-const mapStateToProps = state => {
-    return {}
-}
-
 const dispatchStateToProps = dispatch => {
     return {
         changePreviewPlayStatus: (playStatus, beatmapsetId) => dispatch(changePreviewPlayStatus(playStatus, beatmapsetId)),
     }
 }
 
-export default connect(mapStateToProps, dispatchStateToProps)(Maps)
+export default connect(null, dispatchStateToProps)(Maps)
