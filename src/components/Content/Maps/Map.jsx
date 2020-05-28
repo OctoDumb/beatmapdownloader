@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import MapIcon from './MapIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,57 +7,55 @@ import { changePreviewPlayStatus } from '../../../redux/actions/previewAction';
 import MapAdditionalInformation from './MapAdditionalInformation/MapAdditionalInformation';
 
 
-class Map extends Component {
-    state = {
-        progress: 0,
-        additionalInformationShowed: false
-    };
-
-    showAdditionalInformation() {
+const Map = (props) => {
+    const [progress, setProgress] = useState(0);
+    const [additionalInformationShowed, setAdditionalInformationShowed] = useState(false);
+    const { mapset } = props;
+    const showAdditionalInformation =() => {
         setTimeout(() => {
             document.getElementById('contentMaps').style.filter = "blur(4px)"
             document.getElementById('header').style.filter = "blur(4px)"
         }, 700);
-        this.props.setShowInfo(true);
-        this.setState({ additionalInformationShowed: true });
+        props.setShowInfo(true);
+        setAdditionalInformationShowed(true)
     }
 
-    close(e) {
+    const close = (e) => {
         if (!e || e.currentTarget === e.target) {
-            this.props.setShowInfo(false);
+            props.setShowInfo(false);
 
             let additionalInformation = document.getElementById('additionalInformation');
             additionalInformation.classList.add('additional-information--faded');
 
             document.getElementById('contentMaps').style.filter = "blur(0px)"
             document.getElementById('header').style.filter = "blur(0px)"
-            
+
             setTimeout(() => {
                 additionalInformation.classList.remove('additional-information--faded');
-                this.setState({ additionalInformationShowed: false });
+                setAdditionalInformationShowed(false)
             }, 700);
         }
     }
 
-    playPreview() {
-        this.props.audioApi.src = this.props.mapset.preview;
-        this.props.audioApi.play();
+    const playPreview = () => {
+        props.audioApi.src = props.mapset.preview;
+        props.audioApi.play();
     }
 
-    pausePreview() {
-        this.props.audioApi.pause();
+    const pausePreview = () => {
+        props.audioApi.pause();
     }
 
-    getIconBubble() {
-        let { video, storyboard } = this.props.mapset.extra;
-        if(!video && !storyboard) return null;
-        if(video) 
+    const getIconBubble = () => {
+        let { video, storyboard } = props.mapset.extra;
+        if (!video && !storyboard) return null;
+        if (video)
             return (
                 <div className="map-header__icon">
                     <FontAwesomeIcon icon="film" />
                 </div>
             )
-        else if(storyboard)
+        else if (storyboard)
             return (
                 <div className="map-header__icon">
                     <FontAwesomeIcon icon="image" />
@@ -65,37 +63,35 @@ class Map extends Component {
             )
     }
 
-    getPreviewBtn() {
-        let { mapset, playStatus, previewId } = this.props;
+    const getPreviewBtn = () => {
+        let { mapset, playStatus, previewId } = props;
 
-        if (playStatus && previewId === mapset.id ) {
+        if (playStatus && previewId === mapset.id) {
             return (
-                <FontAwesomeIcon 
-                    className="map-header__playBtn" 
+                <FontAwesomeIcon
+                    className="map-header__playBtn"
                     icon="pause"
                     onClick={() => {
-                        this.pausePreview();
-                        this.props.changePreviewPlayStatus(false, mapset.id);
+                        pausePreview();
+                        props.changePreviewPlayStatus(false, mapset.id);
                     }}
                 />
             )
         }
 
         return (
-            <FontAwesomeIcon 
-                className="map-header__playBtn" 
+            <FontAwesomeIcon
+                className="map-header__playBtn"
                 icon="play"
                 onClick={() => {
-                    this.playPreview();
-                    this.props.changePreviewPlayStatus(true, mapset.id);
+                    playPreview();
+                    props.changePreviewPlayStatus(true, mapset.id);
                 }}
             />
-        ) 
+        )
     }
 
-    download() {
-        let { mapset } = this.props;
-
+    const download = (mapset) => {
         try {
             window.Downloader.add(mapset);
             window.toastr.success(`${mapset.artist} - ${mapset.title}`, "Download", {
@@ -109,56 +105,53 @@ class Map extends Component {
             });
         }
     }
-    
-    render() {
-        let { mapset } = this.props;
 
-        return (
-            <div className="map">
-                {this.state.additionalInformationShowed && createPortal(
-                    <MapAdditionalInformation 
-                        mapset={mapset}
-                        close={this.close.bind(this)}
-                        getPreviewBtn={this.getPreviewBtn.bind(this)}
-                    />, 
-                    document.getElementById('content')
-                )}
-                <div className="progress" style={{ width: `${this.props.progress}%` }}>
-                    {this.props.progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />} 
+    return (
+        <div className="map">
+            {additionalInformationShowed && createPortal(
+                <MapAdditionalInformation
+                    mapset={mapset}
+                    close={close}
+                    getPreviewBtn={getPreviewBtn}
+                />,
+                document.getElementById('content')
+            )}
+            <div className="progress" style={{ width: `${progress}%` }}>
+                {progress === 100 && <FontAwesomeIcon className="progress__icon" icon="check" />}
+            </div>
+            {getPreviewBtn()}
+            <div className="map-header"
+                onClick={() => showAdditionalInformation()}
+                style={{
+                    background: `url("${mapset.covers.cover2x}")`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center center",
+                }}
+            >
+                <div className="map-header__bubbles">
+                    {getIconBubble()}
+                    <span className="map-header__status">{mapset.status}</span>
                 </div>
-                {this.getPreviewBtn()}
-                <div className="map-header"
-                    onClick={() => this.showAdditionalInformation()}
-                    style={{
-                        background: `url("${mapset.covers.cover2x}")`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center center",
-                    }}
-                >
-                    <div className="map-header__bubbles">
-                        {this.getIconBubble()}
-                        <span className="map-header__status">{mapset.status}</span>
-                    </div>
-                    <div className="map-header-information">
-                        <span className="map-header-information__title">{mapset.title}</span>
-                        <span className="map-header-information__artist">{mapset.artist}</span>
-                    </div>
-                </div>
-                <div className="map-content">
-                    <div className="map-content-information">
-                        <span className="map-content-information__text">mapped by <span className="map-content-information__mapper">{mapset.creator.nickname}</span></span>
-                        <span className="map-content-information__text">{mapset.source}</span>
-                        <FontAwesomeIcon 
-                            className="map-content-information__download" 
-                            icon="download" 
-                            onClick={() => this.download()}
-                        />
-                    </div>
-                    <MapIcon mini maps={mapset.beatmaps || []} />
+                <div className="map-header-information">
+                    <span className="map-header-information__title">{mapset.title}</span>
+                    <span className="map-header-information__artist">{mapset.artist}</span>
                 </div>
             </div>
-        )
-    }
+            <div className="map-content">
+                <div className="map-content-information">
+                    <span className="map-content-information__text">mapped by <span className="map-content-information__mapper">{mapset.creator.nickname}</span></span>
+                    <span className="map-content-information__text">{mapset.source}</span>
+                    <FontAwesomeIcon
+                        className="map-content-information__download"
+                        icon="download"
+                        onClick={() => download(mapset)}
+                    />
+                </div>
+                <MapIcon mini maps={mapset.beatmaps || []} />
+            </div>
+        </div>
+    )
+
 }
 
 const mapStateToProps = state => {
@@ -170,7 +163,7 @@ const mapStateToProps = state => {
 
 const dispatchStateToProps = dispatch => {
     return {
-        changePreviewPlayStatus: (playStatus ,beatmapsetId) => dispatch(changePreviewPlayStatus(playStatus, beatmapsetId)),
+        changePreviewPlayStatus: (playStatus, beatmapsetId) => dispatch(changePreviewPlayStatus(playStatus, beatmapsetId)),
     }
 }
 
