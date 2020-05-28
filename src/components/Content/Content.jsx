@@ -6,34 +6,44 @@ import Maps from './Maps/Maps';
 import { connect } from 'react-redux';
 
 class Content extends Component {
-    state = {
-        mapsets: [],
-        recommended: 0.00,
-        reauth: false,
-        loading: false
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            mapsets: [],
+            recommended: 0.00,
+            reauth: false,
+            loading: false
+        };
+    }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if (prevProps !== this.props) {
-            if(this.loadTimeout)
+            if (this.loadTimeout)
                 clearTimeout(this.loadTimeout);
             this.loadTimeout = setTimeout(() => {
                 this.load(this.props);
                 this.loadTimeout = undefined;
             }, 500);
         }
-        
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.mapsets.length === this.state.mapsets.length && nextState.mapsets.length !== 0) {
+            return false;
+        } else {
+            return true
+        }
     }
 
     componentDidMount() {
-        if(!window.APIClient.logged)
+        if (!window.APIClient.logged)
             this.setState({ reauth: true });
         else
             this.load();
     }
 
     async load(params, nextPage = false) {
-        if(this.state.loading) return;
+        if (this.state.loading) return;
         this.setState({ loading: true });
         let { beatmapsets, recommended, cursor } = await window.APIClient.getBeatmapsets(
             Object.assign({}, params, nextPage ? {
@@ -45,7 +55,7 @@ class Content extends Component {
             loading: false,
             mapsets: nextPage ? [...this.state.mapsets, ...beatmapsets] : beatmapsets,
             recommended, cursor
-        }); 
+        });
     }
 
     nextPage() {
@@ -53,16 +63,16 @@ class Content extends Component {
     }
 
     render() {
-        if(this.state.reauth)
+        if (this.state.reauth)
             return (
                 <Redirect to="/auth" />
             )
         return (
             <div className="content" id="content" >
                 <Search recommended={this.state.recommended} />
-                <Maps 
-                    nextPage={this.nextPage.bind(this)} 
-                    mapsets={this.state.mapsets} 
+                <Maps
+                    nextPage={this.nextPage.bind(this)}
+                    mapsets={this.state.mapsets}
                 />
             </div>
         )
@@ -77,9 +87,4 @@ const mapStateToProps = state => {
         query: state.search.query
     }
 }
-
-const dispatchStateToProps = dispatch => {
-    return {}
-}
-
-export default connect(mapStateToProps, dispatchStateToProps)(Content)
+export default connect(mapStateToProps)(Content)
