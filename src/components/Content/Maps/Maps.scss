@@ -6,10 +6,27 @@
     width: 100%;
     flex-grow: 1;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     align-content: flex-start;
-    overflow-y: scroll;
+    overflow: hidden;
+    .ReactVirtualized__Masonry {
+        width: 100%;
+        height: 100%;
+        &:focus {
+            outline: none;
+        }
+    }
+    .ReactVirtualized__Masonry__innerScrollContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: flex-start;
+        &:focus {
+            outline: none;
+        }
+    }
 }
 
 .map {

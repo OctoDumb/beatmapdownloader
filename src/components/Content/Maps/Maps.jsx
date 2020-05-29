@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Map from './Map.jsx';
 import { connect } from 'react-redux';
+import { AutoSizer, Masonry, createMasonryCellPositioner, CellMeasurerCache } from 'react-virtualized';
 import { changePreviewPlayStatus } from '../../../redux/actions/previewAction';
 import './Maps.scss';
 
@@ -25,7 +26,7 @@ class Maps extends Component {
     onScroll(e) {
         if(this.state.showInfo) return;
 
-        let { scrollTop, scrollHeight, clientHeight } = e.nativeEvent.target;
+        let { scrollTop, scrollHeight, clientHeight } = e;
         let header = document.getElementById('header');
 
         if(scrollTop >= 600 && !header.classList.contains('header-scroll'))
@@ -38,19 +39,46 @@ class Maps extends Component {
 
     setShowInfo(v) { this.setState({ showInfo: v }); }
 
-    render() {
+    cellRenderer({ index, key }) {
+        let mapset = this.props.mapsets[index];
+        
         return (
-            <div className="content-maps" id="contentMaps" onScroll={(e) => this.onScroll(e)}>
-                {this.props.mapsets.map(m => {
-                    return (
-                        <Map
-                            mapset={m}
-                            key={"mapset-" + m.id}
-                            audioApi={this.audioApi}
-                            setShowInfo={(v) => this.setShowInfo(v)}
+            <Map 
+                mapset={mapset}
+                key={key}
+               audioApi={this.audioApi}
+                setShowInfo={v => this.setShowInfo(v)}
+            />
+        )
+    }
+
+    render() {
+        const cache = new CellMeasurerCache({
+            defaultWidth: 360,
+            defaultHeight: 174
+        });
+
+        const cellPositioner = createMasonryCellPositioner({
+            cellMeasurerCache: cache,
+            columnCount: 2,
+            columnWidth: 400,
+        });
+
+        return (
+            <div className="content-maps" id="contentMaps">
+                <AutoSizer>
+                    {({width, height}) => {
+                        return <Masonry 
+                            cellCount={this.props.mapsets.length}
+                            cellRenderer={this.cellRenderer.bind(this)}
+                            cellMeasurerCache={cache}
+                            cellPositioner={cellPositioner}
+                            width={width}
+                            height={height}
+                            onScroll={e => this.onScroll(e)}
                         />
-                    ) 
-                })}
+                    }}
+                </AutoSizer>
             </div>
         )
     }
