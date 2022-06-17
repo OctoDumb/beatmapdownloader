@@ -73,7 +73,7 @@
     "electron": "^15.5.5",
     "electron-builder": "^22.6.0",
     "electron-devtools-installer": "^3.0.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "wait-on": "^5.0.0"
   }
 }
