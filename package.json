@@ -70,7 +70,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
-    "electron": "^15.5.5",
+    "electron": "^18.3.7",
     "electron-builder": "^22.6.0",
     "electron-devtools-installer": "^3.0.0",
     "node-sass": "^4.14.1",
